@@ -6,12 +6,24 @@ import {
 import { commonStyles } from '../common/styles'
 import { GOOGLE, FACEBOOK } from '../constants/Strings'
 import AuthService from '../services/AuthService'
+import LoginService from '../services/LoginService'
 
 export default class LoginScreen extends React.Component {
   signInButton = (type='Email') => <Button title={type} onPress={()=>this.signInUsingSocial(type)}/>
 
-  signInUsingSocial = type => {
-    type === GOOGLE ? AuthService.signInWithGoogleAsync() : this.signInWithFacebookAsync()
+  async signInUsingSocial(type) {
+    const { navigate } = this.props.navigation
+
+    if (type === GOOGLE) {
+      const result = await AuthService.signInWithGoogleAsync()
+      if (result.cancelled) {
+        LoginService.signInCancel(navigate)
+      } if (result.error) {
+        LoginService.signInError(navigate)
+      } else {
+        LoginService.signInSuccess({ navigate, result })
+      }
+    }
   }
 
   async signInWithFacebookAsync() {

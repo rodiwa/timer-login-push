@@ -1,4 +1,3 @@
-// import LoginService from './LoginService'
 import Expo from 'expo'
 import { GOOGLE_CLIENT } from '../constants/app/Auth'
 
@@ -12,14 +11,12 @@ class AuthService {
       })
 
       if (result.type === 'success') {
-        console.log('Signed in w google')
-        // LoginService.signInSuccess()
+        return result
       } else {
         return {cancelled: true};
       }
     } catch(e) {
-      // LoginService.signInError()
-      // return {error: true};
+      return {error: true};
     }
   }
 
