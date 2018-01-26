@@ -20,10 +20,9 @@ class AuthService {
     }
   }
 
-  async signOut() {
-    // TODO:  logout button can be implemented only after success login
-    // sign out using expo
-    // goto landing screen
+  async signOut(navigate) {
+    // const signOut = await Expo.signOut() // TODO: expo doesnt have explicit api to logout
+    navigate('Guest')
   }
 }
 

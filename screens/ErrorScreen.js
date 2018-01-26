@@ -21,7 +21,7 @@ export default class ErrorScreen extends React.Component {
         <Text>{ this.showErrorMessage() }</Text>
         <Button 
           title='Main Screen'
-          onPress={()=>this.props.navigation.navigate('Main')}
+          onPress={()=>this.props.navigation.navigate('Guest')}
         />
       </View>
     ) 

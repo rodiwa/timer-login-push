@@ -5,33 +5,41 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 
 import Colors from '../constants/Colors';
 
+import ListScreen from '../screens/ListScreen'
 import TimerScreen from '../screens/TimerScreen'
-import LoginScreen from '../screens/LoginScreen'
+import LogoutScreen from '../screens/LogoutScreen'
 
 export default TabNavigator(
   {
-    Timer: {
-      screen: TimerScreen,
+    List: {
+      screen: ListScreen,
     },
-    Login: {
-      screen: LoginScreen,
+    Timer: {
+      screen: TimerScreen
+    },
+    Logout: {
+      screen: LogoutScreen,
     }
   },
   {
     navigationOptions: ({ navigation }) => ({
       headerMode: 'screen',
+      iniinitialRouteName: 'Timer', // TODO: not working
       swipeEnabled: true,
       tabBarIcon: ({ focused }) => {
         const { routeName } = navigation.state;
         let iconName;
         switch (routeName) {
+          case 'List':
+            iconName = Platform.OS === 'ios' ? `ios-list${focused ? '' : '-outline'}` : 'md-list';
+            break;
           case 'Timer':
             iconName =
               Platform.OS === 'ios'
                 ? `ios-information-circle${focused ? '' : '-outline'}`
                 : 'md-information-circle';
             break;
-          case 'Login':
+          case 'Logout':
             iconName = Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link';
             break;
         }

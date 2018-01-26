@@ -3,12 +3,16 @@ import React from 'react';
 import { StackNavigator } from 'react-navigation';
 
 import MainTabNavigator from './MainTabNavigator';
+import UserTabNavigator from './UserTabNavigator';
 import ErrorScreen from '../screens/ErrorScreen'
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
 
 const RootStackNavigator = StackNavigator(
   {
-    Main: {
+    User: {
+      screen: UserTabNavigator // TODO: move user to below guest when done testing
+    },
+    Guest: {
       screen: MainTabNavigator,
     },
     Error: {

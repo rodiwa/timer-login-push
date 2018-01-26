@@ -1,7 +1,6 @@
 class LoginService {
   signInSuccess({ navigate, result }) {
-    // TODO
-    navigate('Error', { type: 'LoginSuccess' })
+    navigate('User', result)
   }
 
   signInError(navigate) {
