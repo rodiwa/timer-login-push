@@ -24,10 +24,17 @@ export default class LoginScreen extends React.Component {
         LoginService.signInSuccess({ navigate, result })
       }
     }
-  }
 
-  async signInWithFacebookAsync() {
-    // TODO: Facebook not currently setup!
+    if (type === FACEBOOK) {
+      const result = await AuthService.signInWithFacebookAsync()
+      if (result.cancelled) {
+        LoginService.signInCancel(navigate)
+      } if (result.error) {
+        LoginService.signInError(navigate)
+      } else {
+        LoginService.signInSuccess({ navigate, result })
+      }
+    }
   }
 
   render() {
@@ -35,6 +42,7 @@ export default class LoginScreen extends React.Component {
       <View style={commonStyles.view}>
         <Text>Sign In</Text>
         { this.signInButton(GOOGLE) }
+        { this.signInButton(FACEBOOK) }
       </View>
     )
   }

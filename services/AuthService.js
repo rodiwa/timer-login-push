@@ -1,12 +1,12 @@
 import Expo from 'expo'
-import { GOOGLE_CLIENT } from '../constants/app/Auth'
+import { CLIENT_ID } from '../constants/app/Auth'
 
 class AuthService {
   async signInWithGoogleAsync() {
     try {
       const result = await Expo.Google.logInAsync({
-        androidClientId: GOOGLE_CLIENT.ANDROID,
-        iosClientId: GOOGLE_CLIENT.IOS,
+        androidClientId: CLIENT_ID.GOOGLE.ANDROID,
+        iosClientId: CLIENT_ID.GOOGLE.IOS,
         scopes: ['profile', 'email'],
       })
 
@@ -17,6 +17,21 @@ class AuthService {
       }
     } catch(e) {
       return {error: true};
+    }
+  }
+
+  async signInWithFacebookAsync() {
+    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(CLIENT_ID.FACEBOOK.APP_ID, {
+        permissions: ['public_profile'],
+      });
+    if (type === 'success') {
+      // Get the user's name using Facebook's Graph API
+      const response = await fetch(
+        `https://graph.facebook.com/me?access_token=${token}`);
+      Alert.alert(
+        'Logged in!',
+        `Hi ${(await response.json()).name}!`,
+      );
     }
   }
 
