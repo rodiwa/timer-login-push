@@ -9,11 +9,11 @@ import registerForPushNotificationsAsync from '../api/registerForPushNotificatio
 
 const RootStackNavigator = StackNavigator(
   {
-    User: {
-      screen: UserTabNavigator // TODO: move user to below guest when done testing
-    },
     Guest: {
       screen: MainTabNavigator,
+    },
+    User: {
+      screen: UserTabNavigator
     },
     Error: {
       screen: ErrorScreen,
