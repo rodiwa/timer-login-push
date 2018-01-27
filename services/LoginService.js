@@ -1,17 +1,28 @@
-import DatabseService from './DatabaseService'
 import DatabaseService from './DatabaseService';
+import AuthService from '../services/AuthService'
+import { GOOGLE, FACEBOOK } from '../constants/Strings'
 
 class LoginService {
+  async signInUsingSocial(type, navigate) {
+    if (type === GOOGLE) {
+      const result = await AuthService.signInWithGoogleAsync()
+      if (result.cancelled) {
+        return this.signInCancel(navigate)
+      } if (result.error) {
+        return this.signInError(navigate)
+      } else {
+        return this.signInSuccess({ navigate, result })
+      }
+    }
+  }
+
   async signInSuccess({ navigate, result }) {
-    // add userid result.user.id to firebase db if new user
-    const userDetails = await DatabaseService.getUserDetails(result.user)
-    // console.log('aa')
-    // console.log(userDetails)
-    // or
-
-    // get saved details from firebase for that id and send for navigation
-
-    navigate('User', userDetails)
+    try {
+      const userDetails = await DatabaseService.getUserDetails(result.user)
+      navigate('User')
+    } catch (e) {
+      // ignore
+    }
   }
 
   signInError(navigate) {

@@ -1,5 +1,12 @@
 import * as firebase from 'firebase'
 
+const newUserDefaultData = {
+  list: {},
+  isTimerRunning: false,
+  isTimerComplete: false,
+  hasUserStoppedTimer: false
+}
+
 class DatabaseService {
   constructor () {
     loggedInUser = null
@@ -16,43 +23,29 @@ class DatabaseService {
     };
 
     firebase.initializeApp(config)
-
-    firebase.auth().onAuthStateChanged = (user) => {
-      if (user) {
-        console.log('User logged in')        
-      } else {
-        console.log('User NOT logged in')
-      }
-    }
   }
 
   async addNewuser (userId) {
-    await firebase.database().ref(`users/${userId}`).set({
-      list: {},
-      isTimerRunning: false,
-      isTimerComplete: false,
-      hasUserStoppedTimer: false
-    })
+    await firebase.database().ref(`users/${userId}`).set(newUserDefaultData)
   }
 
-  isUserAlreadyExists () {
+  getUserDetails (user) {
+    try {
+      const { id } = user
+      this.loggedInUser = user // cached user details
 
-  }
+      firebase.database().ref(`users/${id}`).on('value', snapshot => {
+        details = snapshot.val()
+        if (!details) {
+          this.addNewuser(`${user.id}`)
+          details = newUserDefaultData
+        }
 
-  async getUserDetails (user) {
-    const { id } = user
-    this.loggedInUser = user // cached user details
-
-    await firebase.database().ref(`users/${id}789`).on('value', snapshot => {
-      const userDetails = snapshot.val()
-      if (!userDetails) {
-        return this.addNewuser(`${user.id}789`)
-      }
-
-      // console.log('sss')
-      // console.log(userDetails)
-      return userDetails
-    })
+        // TODO: redux action to store data to state
+      })
+    } catch (e) {
+      // ignore
+    }
   }
 }
 
