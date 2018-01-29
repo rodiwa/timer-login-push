@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import { TimerDetailsReducer } from './TimerDetailsReducer'
+import { LoginReducer } from './LoginReducer'
 
 export const Reducers = combineReducers({
-  TimerDetailsReducer
+  login: LoginReducer
 })

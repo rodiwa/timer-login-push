@@ -1,14 +1,20 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import {
   View, Text, Button
 } from 'react-native'
 
 import { commonStyles } from '../common/styles'
-import { GOOGLE, FACEBOOK } from '../constants/Strings'
-import LoginService from '../services/LoginService'
+import { GOOGLE } from '../constants/Strings'
+import { loginGoogleAction } from '../actions/LoginActions'
 
-export default class LoginScreen extends React.Component {
-  signInButton = (type='Email') => <Button title={type} onPress={()=>LoginService.signInUsingSocial(type, this.props.navigation.navigate)}/>
+class LoginScreen extends React.Component {
+  signInButton = (type='Email') => {
+    const {navigate} = this.props.navigation
+    return (
+      <Button title={type} onPress={()=>this.props.loginGoogleAction(navigate)}/>
+    )
+  }
 
   render() {
     return (
@@ -19,3 +25,5 @@ export default class LoginScreen extends React.Component {
     )
   }
 }
+
+export default connect(null, { loginGoogleAction })(LoginScreen)
