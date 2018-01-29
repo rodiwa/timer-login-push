@@ -1,6 +1,7 @@
 import Expo from 'expo'
 import { LOGIN_ACTIONS } from './types'
 import { GOOGLE_CLIENT } from '../constants/app/Auth'
+import DatabaseService from '../services/DatabaseService.js'
 
 const {
   LOGIN_GOOGLE,
@@ -24,9 +25,13 @@ export const loginGoogleAction = navigate => {
       })
   
       if (result.type === 'success') {
-        // TODO: get user details from firebase from here
+        const { user } = result
 
-        dispatch({ type: LOGIN_SUCCESS, payload: result.user })
+        const userData = await DatabaseService.getUserDetailsPromise(user)
+        if (!userData) {
+          await DatabaseService.addNewuser(user)
+        }
+        dispatch({ type: LOGIN_SUCCESS, payload: {user, userData} })
         navigate('User')
       } else if (result.type === 'cancelled') {
         dispatch({ type: LOGIN_CANCEL })
