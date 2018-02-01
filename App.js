@@ -5,6 +5,9 @@ import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
 import DatabaseService from './services/DatabaseService'
 
+import { Provider } from 'react-redux'
+import { store } from './store'
+
 console.disableYellowBox = true
 
 export default class App extends React.Component {
@@ -27,11 +30,13 @@ export default class App extends React.Component {
       );
     } else {
       return (
-        <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
-          <RootNavigation />
-        </View>
+        <Provider store={store}>
+          <View style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
+            <RootNavigation />
+          </View>
+        </Provider>
       );
     }
   }

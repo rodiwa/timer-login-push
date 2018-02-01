@@ -8,10 +8,6 @@ const newUserDefaultData = {
 }
 
 class DatabaseService {
-  constructor () {
-    loggedInUser = null
-  }
-
   initialize () {
     const config = {
       apiKey: "AIzaSyCI2JcDVWdef625AtkMiZBYrwkKTIIMoRE",
@@ -25,27 +21,34 @@ class DatabaseService {
     firebase.initializeApp(config)
   }
 
-  async addNewuser (userId) {
-    await firebase.database().ref(`users/${userId}`).set(newUserDefaultData)
+  addNewuser (user) {
+    return new Promise((resolve, reject) => {
+      try {
+        const { id } = user
+        firebase.database().ref(`users/${id}`).set(newUserDefaultData).then(
+          resolve('User added')
+        )
+      } catch(e) {
+        console.error(e)
+        reject(e)
+      }
+    })
   }
 
-  getUserDetails (user) {
-    try {
-      const { id } = user
-      this.loggedInUser = user // cached user details
-
-      firebase.database().ref(`users/${id}`).on('value', snapshot => {
-        details = snapshot.val()
-        if (!details) {
-          this.addNewuser(`${user.id}`)
-          details = newUserDefaultData
-        }
-
-        // TODO: redux action to store data to state
-      })
-    } catch (e) {
-      // ignore
-    }
+  getUserDetailsPromise (user) {
+    return new Promise((resolve, reject) => {
+      try {
+        let details
+        const { id } = user
+        firebase.database().ref(`users/${id}`).on('value', snapshot => {
+          details = snapshot.val()
+          resolve(details)
+        })
+      } catch(e) {
+        console.error(e)
+        reject(e)
+      }
+    })
   }
 }
 

@@ -1,11 +1,12 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import {
   View, Text, Button
 } from 'react-native'
 import { commonStyles } from '../common/styles'
-import AuthService from '../services/AuthService';
+import { logoutAction } from '../actions/LoginActions'
 
-export default class LogoutScreen extends React.Component {
+class LogoutScreen extends React.Component {
   render () {
     const { navigate } = this.props.navigation
 
@@ -14,7 +15,7 @@ export default class LogoutScreen extends React.Component {
         <Text>Just checking! You DO wanna log out, right?</Text>
         <Button
           title='Yep, log me out'
-          onPress={()=>{AuthService.signOut(navigate)}} // TODO: logout using LoginServices
+          onPress={()=>{this.props.logoutAction(navigate)}}
         />
         <Button
           title='Nope, my bad'
@@ -24,3 +25,5 @@ export default class LogoutScreen extends React.Component {
     ) 
   }
 }
+
+export default connect(null, { logoutAction })(LogoutScreen)
