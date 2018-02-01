@@ -16,14 +16,14 @@ const {
 
 export const loginGoogleAction = navigate => {
   return async (dispatch) => {
-    // dispatch({ type: LOGIN_GOOGLE })
+    dispatch({ type: LOGIN_GOOGLE })
     try {
       const result = await Expo.Google.logInAsync({
         androidClientId: GOOGLE_CLIENT.ANDROID,
         iosClientId: GOOGLE_CLIENT.IOS,
         scopes: ['profile', 'email']
       })
-  
+
       if (result.type === 'success') {
         const { user } = result
 
@@ -38,8 +38,7 @@ export const loginGoogleAction = navigate => {
         navigate('Guest')
       }
     } catch (e) {
-      console.error(e)
-      dispatch({ type: LOGIN_ERROR })
+      dispatch({ type: LOGIN_CANCEL })
       navigate('Guest')
     }
   }

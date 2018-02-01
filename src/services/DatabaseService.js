@@ -29,7 +29,6 @@ class DatabaseService {
           resolve('User added')
         )
       } catch(e) {
-        console.error(e)
         reject(e)
       }
     })
@@ -45,7 +44,6 @@ class DatabaseService {
           resolve(details)
         })
       } catch(e) {
-        console.error(e)
         reject(e)
       }
     })

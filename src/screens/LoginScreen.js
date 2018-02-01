@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import {
   View, Text, Button
 } from 'react-native'
@@ -11,8 +12,9 @@ import { loginGoogleAction } from '../actions/LoginActions'
 class LoginScreen extends React.Component {
   signInButton = (type='Email') => {
     const {navigate} = this.props.navigation
+    console.log(this.props)
     return (
-      <Button title={type} onPress={()=>this.props.loginGoogleAction(navigate)}/>
+      <Button title={type} onPress={() => this.props.loginAction(navigate)}/>
     )
   }
 
@@ -26,4 +28,10 @@ class LoginScreen extends React.Component {
   }
 }
 
-export default connect(null, { loginGoogleAction })(LoginScreen)
+const mapDispatchToProps = dispatch => {
+  return {
+    loginAction: bindActionCreators(loginGoogleAction, dispatch)
+  }
+}
+
+export default connect(null, mapDispatchToProps)(LoginScreen)
