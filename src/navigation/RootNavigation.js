@@ -1,10 +1,12 @@
 import { Notifications } from 'expo';
 import React from 'react';
+import { connect } from 'react-redux'
 import { StackNavigator } from 'react-navigation';
 
 import MainTabNavigator from './MainTabNavigator';
 import UserTabNavigator from './UserTabNavigator';
 import ErrorScreen from '../screens/ErrorScreen'
+import { LoadingScreen } from '../components/LoadingScreen'
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
 
 const RootStackNavigator = StackNavigator(
@@ -28,7 +30,7 @@ const RootStackNavigator = StackNavigator(
   }
 );
 
-export default class RootNavigator extends React.Component {
+class RootNavigator extends React.Component {
   componentDidMount() {
     this._notificationSubscription = this._registerForPushNotifications();
   }
@@ -37,8 +39,16 @@ export default class RootNavigator extends React.Component {
     this._notificationSubscription && this._notificationSubscription.remove();
   }
 
+  renderMainSectionTest () {
+    if (this.props.login.isLoggingInOut) {
+      return <LoadingScreen />
+    }
+
+    return <RootStackNavigator />
+  }
+
   render() {
-    return <RootStackNavigator />;
+    return this.renderMainSectionTest()
   }
 
   _registerForPushNotifications() {
@@ -56,3 +66,11 @@ export default class RootNavigator extends React.Component {
     console.log(`Push notification ${origin} with data: ${JSON.stringify(data)}`);
   };
 }
+
+const mapStateToProps = state => {
+  return {
+    login: state.login
+  }
+}
+
+export default connect(mapStateToProps)(RootNavigator)
