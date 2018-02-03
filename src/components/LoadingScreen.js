@@ -15,20 +15,16 @@ export const LoadingScreen = ({ customMsg }) => {
   const message = customMsg || LOADING_MSG
   return (
     <View style={styles.view}>
-      <Text style={styles.text}>{ message }</Text>
+      <Text>{ message }</Text>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   view : {
-    backgroundColor: '#333',
     display: 'flex',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
-  },
-  text: {
-    color: 'white'
   }
 })

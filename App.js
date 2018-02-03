@@ -2,11 +2,11 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import RootNavigation from './navigation/RootNavigation';
-import DatabaseService from './services/DatabaseService'
+import RootNavigation from './src/navigation/RootNavigation';
+import DatabaseService from './src/services/DatabaseService'
 
 import { Provider } from 'react-redux'
-import { store } from './store'
+import { store } from './src/store'
 
 console.disableYellowBox = true
 

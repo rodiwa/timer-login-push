@@ -16,14 +16,13 @@ const {
 
 export const loginGoogleAction = navigate => {
   return async (dispatch) => {
-    // dispatch({ type: LOGIN_GOOGLE })
     try {
+      dispatch({ type: LOGIN_GOOGLE })
       const result = await Expo.Google.logInAsync({
         androidClientId: GOOGLE_CLIENT.ANDROID,
         iosClientId: GOOGLE_CLIENT.IOS,
         scopes: ['profile', 'email']
       })
-  
       if (result.type === 'success') {
         const { user } = result
 
@@ -31,16 +30,16 @@ export const loginGoogleAction = navigate => {
         if (!userData) {
           await DatabaseService.addNewuser(user)
         }
+        // navigate('User')
         dispatch({ type: LOGIN_SUCCESS, payload: {user, userData} })
-        navigate('User')
+        
       } else if (result.type === 'cancelled') {
         dispatch({ type: LOGIN_CANCEL })
-        navigate('Guest')
+        // navigate('Guest')
       }
     } catch (e) {
-      console.error(e)
-      dispatch({ type: LOGIN_ERROR })
-      navigate('Guest')
+      dispatch({ type: LOGIN_CANCEL })
+      // navigate('Guest')
     }
   }
 }
