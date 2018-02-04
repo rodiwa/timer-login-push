@@ -12,7 +12,6 @@ import { loginGoogleAction } from '../actions/LoginActions'
 class LoginScreen extends React.Component {
   signInButton = (type='Email') => {
     const {navigate} = this.props.navigation
-    console.log(this.props)
     return (
       <Button title={type} onPress={() => this.props.loginAction(navigate)}/>
     )
