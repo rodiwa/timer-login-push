@@ -1,8 +1,8 @@
 import { LOGIN_ACTIONS } from '../actions/types'
 
 const {
-  LOGIN_GOOGLE,
-  LOGIN_FACEBOOK,
+  LOGIN_GOOGLE_ATTEMPT,
+  LOGIN_FACEBOOK_ATTEMPT,
   LOGIN_SUCCESS,
   LOGIN_ERROR,
   LOGIN_CANCEL,
@@ -21,8 +21,8 @@ const INITIAL_STATE = {
 
 export const LoginReducer = (state=INITIAL_STATE, action) => {
   switch (action.type) {
-    case LOGIN_GOOGLE:
-    case LOGIN_FACEBOOK:
+    case LOGIN_GOOGLE_ATTEMPT:
+    case LOGIN_FACEBOOK_ATTEMPT:
     case LOGOUT:
       return Object.assign({}, state, { isLoggingInOut: true })
     case LOGIN_SUCCESS:

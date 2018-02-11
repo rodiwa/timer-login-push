@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 
 import { RootNavigator } from './RootNavigator'
 import { LoadingScreen } from '../components/LoadingScreen'
-import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
+import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync'
+import { addNavigationHelpers } from 'react-navigation'
 
 class AppNavigation extends React.Component {
   componentDidMount() {
@@ -20,7 +21,12 @@ class AppNavigation extends React.Component {
       return <LoadingScreen />
     }
 
-    return <RootNavigator />
+    return <RootNavigator
+      navigation={addNavigationHelpers({
+        dispatch: this.props.dispatch,
+        state: this.props.nav
+      })}
+    />
   }
 
   render() {
@@ -45,7 +51,8 @@ class AppNavigation extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    login: state.login
+    login: state.login,
+    nav: state.nav
   }
 }
 
