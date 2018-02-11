@@ -3,7 +3,7 @@ import { LOGIN_ACTIONS } from './types'
 import { GOOGLE_CLIENT } from '../constants/app/Auth'
 import DatabaseService from '../services/DatabaseService.js'
 import { NavigationActions } from 'react-navigation'
-import { gotoUserLandingPageAction, gotoGuestandingPageAction } from './NavActions'
+import { gotoUserLandingPageAction, gotoGuestLandingPageAction } from './NavActions'
 
 const {
   LOGIN_GOOGLE_ATTEMPT,
@@ -11,7 +11,7 @@ const {
   LOGIN_SUCCESS,
   LOGIN_ERROR,
   LOGIN_CANCEL,
-  LOGOUT,
+  LOGOUT_ATTEMPT,
   LOGOUT_SUCCESS,
   LOGOUT_ERROR
 } = LOGIN_ACTIONS
@@ -48,7 +48,8 @@ export const loginGoogleAction = navigate => {
 
 export const logoutAction = navigate => {
   return dispatch => {
-    dispatch({ type: LOGOUT })
-    navigate('Guest')
+    dispatch({ type: LOGOUT_ATTEMPT })
+    dispatch(gotoGuestLandingPageAction())
+    dispatch({ type: LOGOUT_SUCCESS })
   }
 }
