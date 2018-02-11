@@ -19,7 +19,7 @@ class LogoutScreen extends React.Component {
         />
         <Button
           title='Nope, my bad'
-          onPress={()=>{navigate('User')}}
+          onPress={()=>{this.props.navigation.goBack()}}
         />
       </View>
     ) 
