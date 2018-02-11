@@ -2,7 +2,7 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import RootNavigation from './src/navigation/RootNavigation';
+import AppNavigation from './src/navigation/AppNavigation';
 import DatabaseService from './src/services/DatabaseService'
 
 import { Provider } from 'react-redux'
@@ -34,7 +34,7 @@ export default class App extends React.Component {
           <View style={styles.container}>
             {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
             {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
-            <RootNavigation />
+            <AppNavigation />
           </View>
         </Provider>
       );

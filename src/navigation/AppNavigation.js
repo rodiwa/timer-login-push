@@ -1,36 +1,13 @@
 import { Notifications } from 'expo';
 import React from 'react';
 import { connect } from 'react-redux'
-import { StackNavigator } from 'react-navigation';
 
-import MainTabNavigator from './MainTabNavigator';
-import UserTabNavigator from './UserTabNavigator';
-import ErrorScreen from '../screens/ErrorScreen'
+import { RootNavigator } from './RootNavigator'
 import { LoadingScreen } from '../components/LoadingScreen'
-import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
+import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync'
+import { addNavigationHelpers } from 'react-navigation'
 
-const RootStackNavigator = StackNavigator(
-  {
-    Guest: {
-      screen: MainTabNavigator,
-    },
-    User: {
-      screen: UserTabNavigator
-    },
-    Error: {
-      screen: ErrorScreen,
-    },
-  },
-  {
-    navigationOptions: () => ({
-      headerTitleStyle: {
-        fontWeight: 'normal',
-      },
-    }),
-  }
-);
-
-class RootNavigator extends React.Component {
+class AppNavigation extends React.Component {
   componentDidMount() {
     this._notificationSubscription = this._registerForPushNotifications();
   }
@@ -44,7 +21,12 @@ class RootNavigator extends React.Component {
       return <LoadingScreen />
     }
 
-    return <RootStackNavigator />
+    return <RootNavigator
+      navigation={addNavigationHelpers({
+        dispatch: this.props.dispatch,
+        state: this.props.nav
+      })}
+    />
   }
 
   render() {
@@ -69,8 +51,9 @@ class RootNavigator extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    login: state.login
+    login: state.login,
+    nav: state.nav
   }
 }
 
-export default connect(mapStateToProps)(RootNavigator)
+export default connect(mapStateToProps)(AppNavigation)
