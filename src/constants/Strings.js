@@ -10,3 +10,8 @@ export const LOGIN_MSGS = {
   ERROR_MSG: 'We could not log you in right now!',
   CANCEL_MSG: 'You cancelled your login!'
 }
+
+// timer msgs
+export const TIMER_MSGS = {
+  ADD_NEW: 'Add New Timer'
+}
