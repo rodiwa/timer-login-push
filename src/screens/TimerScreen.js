@@ -2,10 +2,12 @@ import React from 'react'
 import {
   View, Text, StyleSheet, Button
 } from 'react-native'
-
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
 import { commonStyles } from '../common/styles'
+import { cancelAddTimerAction } from '../actions/AppActions'
 
-export default class TimerScreen extends React.Component {
+class TimerScreen extends React.Component {
   state = {
     isTimerRunning: false,
     hh: '04',
@@ -36,6 +38,16 @@ export default class TimerScreen extends React.Component {
 
   showButton = () => {
     const { isTimerRunning } = this.state
+    const { isEditing } = this.props.app
+
+    if (isEditing) {
+      return (
+        <View>
+          <Button title="Add" onPress={()=>null} />
+          <Button title="Cancel" onPress={()=>this.props.cancelAddTimerAction()} />
+        </View>
+      )
+    }
 
     return (
       <Button
@@ -55,3 +67,15 @@ export default class TimerScreen extends React.Component {
     )
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    cancelAddTimerAction: bindActionCreators(cancelAddTimerAction, dispatch)
+  }
+}
+
+const mapStateToProps = state => {
+  return { app: state.app }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TimerScreen)

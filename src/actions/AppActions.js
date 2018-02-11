@@ -11,3 +11,13 @@ export const addNewTimerAction = () => {
     }))
   }
 }
+
+export const cancelAddTimerAction = () => {
+  const { EDIT_MODE_OFF } = APP_ACTIONS
+  return dispatch => {
+    dispatch({ type: EDIT_MODE_OFF })
+    dispatch(NavigationActions.navigate({
+      routeName: 'List'
+    }))
+  }
+}
