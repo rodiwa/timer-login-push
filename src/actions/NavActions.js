@@ -6,6 +6,7 @@ export const gotoUserLandingPageAction = (userData) => NavigationActions.navigat
   action: NavigationActions.navigate({ routeName: 'Timer' })
 })
 
-export const gotoGuestandingPageAction = () => NavigationActions.navigate({
-  routeName: 'Guest'
+export const gotoGuestLandingPageAction = () => NavigationActions.navigate({
+  routeName: 'Guest',
+  action: NavigationActions.navigate({ routeName: 'Timer' })
 })

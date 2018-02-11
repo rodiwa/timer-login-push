@@ -8,18 +8,16 @@ import { logoutAction } from '../actions/LoginActions'
 
 class LogoutScreen extends React.Component {
   render () {
-    const { navigate } = this.props.navigation
-
     return (
       <View style={commonStyles.view}>
         <Text>Just checking! You DO wanna log out, right?</Text>
         <Button
           title='Yep, log me out'
-          onPress={()=>{this.props.logoutAction(navigate)}}
+          onPress={()=>{this.props.logoutAction()}}
         />
         <Button
           title='Nope, my bad'
-          onPress={()=>{navigate('User')}}
+          onPress={()=>{this.props.navigation.goBack()}}
         />
       </View>
     ) 
