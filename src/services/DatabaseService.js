@@ -1,4 +1,5 @@
 import * as firebase from 'firebase'
+import { camelCase } from 'lodash'
 
 const newUserDefaultData = {
   list: {},
@@ -27,6 +28,26 @@ class DatabaseService {
         const { id } = user
         firebase.database().ref(`users/${id}`).set(newUserDefaultData).then(
           resolve('User added')
+        )
+      } catch(e) {
+        reject(e)
+      }
+    })
+  }
+
+  saveNewTimerInList (title, time, id) {
+    const camelCasedTitle = camelCase(title)
+    const objTimerToSaveObj = {}
+    objTimerToSaveObj[camelCasedTitle] = {
+      default: false,
+      hh: '02',
+      mm: '15',
+      title
+    }
+    return new Promise((resolve, reject) => {
+      try {
+        firebase.database().ref(`users/${id}/timers`).update(objTimerToSaveObj).then(
+          resolve(objTimerToSaveObj)          
         )
       } catch(e) {
         reject(e)

@@ -8,7 +8,8 @@ const {
   LOGIN_CANCEL,
   LOGOUT_ATTEMPT,
   LOGOUT_SUCCESS,
-  LOGOUT_ERROR
+  LOGOUT_ERROR,
+  ADD_NEW_TIMER_TO_LIST
 } = LOGIN_ACTIONS
 
 const INITIAL_STATE = {
@@ -36,6 +37,20 @@ export const LoginReducer = (state=INITIAL_STATE, action) => {
       return Object.assign({}, state, { isLoggedInAnonymous: true, isLoggedIn: false, isLoggingInOut: false, /* userDetails: null */ })
     case LOGOUT_ERROR:
       return Object.assign({}, state, { isLoggedInAnonymous: false, isLoggingInOut: false })
+    case ADD_NEW_TIMER_TO_LIST: // TODO: move this to app state?
+      return {
+        ...state,
+        userDetails: {
+          ...state.userDetails,
+          userData: {
+            ...state.userDetails.userData,
+            timers: {
+              ...state.userDetails.userData.timers,
+              ...action.payload
+            }
+          }
+        }
+      }
     default:
       return state    
   }

@@ -1,10 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import {
   View, Text, Button
 } from 'react-native'
 import { commonStyles } from '../common/styles'
 import { NavigationActions } from 'react-navigation'
+
+import { TIMER_MSGS } from '../constants/Strings'
+import { addNewTimerAction } from '../actions/AppActions'
 
 class ListScreen extends React.Component {
   renderTimerList () {
@@ -22,6 +26,13 @@ class ListScreen extends React.Component {
     return arrTimer.map((timer, idx) =><Button key={idx} title={timer.title} onPress={()=>this.selectTimer(timer)} />)
   }
 
+  renderAddNewTimerBtn () {
+    const { isTimerRunning } = this.props
+    if (!isTimerRunning) {
+      return <Button title={TIMER_MSGS.ADD_NEW} onPress={()=>this.props.addNewTimerAction()} />
+    }
+  }
+
   selectTimer (timerDetails) {
     // TODO: refactor this later. move to NavActions
     const navigateAction = NavigationActions.navigate({
@@ -35,6 +46,7 @@ class ListScreen extends React.Component {
     return (
       <View style={commonStyles.view}>
         { this.renderTimerList() }
+        { this.renderAddNewTimerBtn() }
       </View>
     ) 
   }
@@ -42,6 +54,7 @@ class ListScreen extends React.Component {
 
 const mapStateToProps = state => {
   const { timers } = state.login.userDetails.userData
+  const { isTimerRunning } = state.login.userDetails.userData
   
   // offline
   // TODO: remove offline code
@@ -64,8 +77,15 @@ const mapStateToProps = state => {
   // }
 
   return {
-    timers
+    timers,
+    isTimerRunning
   }
 }
 
-export default connect(mapStateToProps)(ListScreen)
+const mapDispatchToProps = dispatch => {
+  return {
+    addNewTimerAction: bindActionCreators(addNewTimerAction, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListScreen)
