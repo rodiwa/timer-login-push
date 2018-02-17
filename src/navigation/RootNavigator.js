@@ -22,6 +22,7 @@ export const RootNavigator = StackNavigator(
       headerTitleStyle: {
         fontWeight: 'normal',
       },
+      header: null
     }),
   }
 );
