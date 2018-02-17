@@ -8,6 +8,9 @@ import DatabaseService from './src/services/DatabaseService'
 import { Provider } from 'react-redux'
 import { store } from './src/store'
 
+import { persistStore } from 'redux-persist'
+import { PersistGate } from 'redux-persist/es/integration/react'
+
 console.disableYellowBox = true
 
 export default class App extends React.Component {
@@ -31,11 +34,17 @@ export default class App extends React.Component {
     } else {
       return (
         <Provider store={store}>
-          <View style={styles.container}>
-            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-            {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
-            <AppNavigation />
-          </View>
+          <PersistGate
+            persistor={persistStore(store)}
+            loading={null}
+          >
+            <View style={styles.container}>
+              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+              {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
+              <AppNavigation />
+            </View>
+          </PersistGate>
+
         </Provider>
       );
     }
