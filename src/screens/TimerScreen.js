@@ -21,10 +21,6 @@ class TimerScreen extends React.Component {
     const { isEditing } = this.props.app
     const { params } = this.props.navigation.state
 
-    if (params) {
-      return <Text> {params.title} </Text>
-    }
-
     if (isEditing) {
       return (
         <TextInput
@@ -34,6 +30,10 @@ class TimerScreen extends React.Component {
           value={this.state.text}
         />
       )
+    }
+
+    if (params) {
+      return <Text> {params.title} </Text>
     }
   }
 
