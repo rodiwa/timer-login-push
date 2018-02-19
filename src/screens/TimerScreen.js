@@ -5,7 +5,12 @@ import {
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { commonStyles } from '../common/styles'
-import { cancelAddTimerAction, saveNewTimerAction } from '../actions/AppActions'
+import {
+  cancelAddTimerAction,
+  saveNewTimerAction,
+  startTimerAction,
+  stopTimerAction,
+  timerCompleteAction } from '../actions/AppActions'
 
 class TimerScreen extends React.Component {
   state = {
@@ -15,7 +20,13 @@ class TimerScreen extends React.Component {
 
   }
 
-  toggleTimer = () => this.setState({ isTimerRunning: !this.state.isTimerRunning }) // TODO: temporary
+  toggleTimer = () => {
+    // this.setState({ isTimerRunning: !this.state.isTimerRunning }) // TODO: temporary
+    this.setState({ isTimerRunning: !this.state.isTimerRunning })
+    const { startTimerAction, stopTimerAction, timerCompleteAction } = this.props
+    const { isTimerRunning } = this.props.app
+    isTimerRunning? stopTimerAction() : startTimerAction()
+  }
 
   showTimerTitle () {
     const { isEditing } = this.props.app
@@ -96,7 +107,10 @@ class TimerScreen extends React.Component {
 const mapDispatchToProps = dispatch => {
   return {
     cancelAddTimerAction: bindActionCreators(cancelAddTimerAction, dispatch),
-    saveNewTimerAction: bindActionCreators(saveNewTimerAction, dispatch)
+    saveNewTimerAction: bindActionCreators(saveNewTimerAction, dispatch),
+    startTimerAction: bindActionCreators(startTimerAction, dispatch),
+    stopTimerAction: bindActionCreators(stopTimerAction, dispatch),
+    timerCompleteAction: bindActionCreators(timerCompleteAction, dispatch),
   }
 }
 

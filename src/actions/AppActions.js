@@ -22,6 +22,27 @@ export const cancelAddTimerAction = () => {
   }
 }
 
+export const startTimerAction = () => {
+  const { START_TIMER_COUNTDOWN } = APP_ACTIONS
+  return {
+    type: START_TIMER_COUNTDOWN
+  }
+}
+
+export const stopTimerAction = () => {
+  const { STOP_TIMER_COUNTDOWN } = APP_ACTIONS
+  return {
+    type: STOP_TIMER_COUNTDOWN
+  }
+}
+
+export const timerCompleteAction = () => {
+  const { TIMER_COMPLETE } = APP_ACTIONS
+  return {
+    type: TIMER_COMPLETE
+  }
+}
+
 export const saveNewTimerAction = (newTitle, newTime) => {
   const { EDIT_MODE_OFF } = APP_ACTIONS
   const { ADD_NEW_TIMER_TO_LIST } = LOGIN_ACTIONS
