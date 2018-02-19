@@ -24,15 +24,22 @@ export const cancelAddTimerAction = () => {
 
 export const startTimerAction = () => {
   const { START_TIMER_COUNTDOWN } = APP_ACTIONS
-  return {
-    type: START_TIMER_COUNTDOWN
+  return dispatch => {
+    dispatch(NavigationActions.navigate({
+      routeName: 'TimerScreen'
+    }))
+    dispatch({ type: START_TIMER_COUNTDOWN })
   }
 }
 
 export const stopTimerAction = () => {
   const { STOP_TIMER_COUNTDOWN } = APP_ACTIONS
-  return {
-    type: STOP_TIMER_COUNTDOWN
+  return dispatch => {
+    dispatch(NavigationActions.navigate({
+      routeName: 'User',
+      action: NavigationActions.navigate({ routeName: 'Timer' })
+    }))
+    dispatch({ type: STOP_TIMER_COUNTDOWN })    
   }
 }
 

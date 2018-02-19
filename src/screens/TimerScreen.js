@@ -14,15 +14,11 @@ import {
 
 class TimerScreen extends React.Component {
   state = {
-    isTimerRunning: false,
     hh: '04',
     mm: '20',
-
   }
 
   toggleTimer = () => {
-    // this.setState({ isTimerRunning: !this.state.isTimerRunning }) // TODO: temporary
-    this.setState({ isTimerRunning: !this.state.isTimerRunning })
     const { startTimerAction, stopTimerAction, timerCompleteAction } = this.props
     const { isTimerRunning } = this.props.app
     isTimerRunning? stopTimerAction() : startTimerAction()
@@ -73,8 +69,7 @@ class TimerScreen extends React.Component {
   }
 
   showButton = () => {
-    const { isTimerRunning } = this.state
-    const { isEditing } = this.props.app
+    const { isEditing, isTimerRunning } = this.props.app
 
     if (isEditing) {
       return (
