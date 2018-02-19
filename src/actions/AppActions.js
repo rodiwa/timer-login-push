@@ -22,6 +22,17 @@ export const cancelAddTimerAction = () => {
   }
 }
 
+export const selectTimerFromListAction = timerDetails => {
+  const { SET_SELECTED_TIMER_DETAILS } = APP_ACTIONS
+  return dispatch => {
+    dispatch({ type: SET_SELECTED_TIMER_DETAILS, payload: timerDetails })
+    dispatch(NavigationActions.navigate({
+      routeName: 'Timer',
+      params: timerDetails
+    }))
+  }
+}
+
 export const startTimerAction = () => {
   const { START_TIMER_COUNTDOWN } = APP_ACTIONS
   return dispatch => {

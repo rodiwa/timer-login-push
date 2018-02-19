@@ -8,11 +8,11 @@ import { commonStyles } from '../common/styles'
 import { NavigationActions } from 'react-navigation'
 
 import { TIMER_MSGS } from '../constants/Strings'
-import { addNewTimerAction } from '../actions/AppActions'
+import { addNewTimerAction, selectTimerFromListAction } from '../actions/AppActions'
 
 class ListScreen extends React.Component {
   renderTimerList () {
-    const { timers } = this.props
+    const { timers, selectTimerFromListAction } = this.props
     const arrTimer = []
 
     if (!timers) {
@@ -23,7 +23,7 @@ class ListScreen extends React.Component {
       arrTimer.push(timers[timer])
     }
 
-    return arrTimer.map((timer, idx) =><Button key={idx} title={timer.title} onPress={()=>this.selectTimer(timer)} />)
+    return arrTimer.map((timerDetails, idx) =><Button key={idx} title={timerDetails.title} onPress={()=>selectTimerFromListAction(timerDetails)} />)
   }
 
   renderAddNewTimerBtn () {
@@ -31,15 +31,6 @@ class ListScreen extends React.Component {
     if (!isTimerRunning) {
       return <Button title={TIMER_MSGS.ADD_NEW} onPress={()=>this.props.addNewTimerAction()} />
     }
-  }
-
-  selectTimer (timerDetails) {
-    // TODO: refactor this later. move to NavActions
-    const navigateAction = NavigationActions.navigate({
-      routeName: 'Timer',
-      params: timerDetails
-    })
-    this.props.navigation.dispatch(navigateAction)
   }
 
   render () {
@@ -84,7 +75,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addNewTimerAction: bindActionCreators(addNewTimerAction, dispatch)
+    addNewTimerAction: bindActionCreators(addNewTimerAction, dispatch),
+    selectTimerFromListAction: bindActionCreators(selectTimerFromListAction, dispatch)
   }
 }
 

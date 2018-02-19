@@ -25,8 +25,8 @@ class TimerScreen extends React.Component {
   }
 
   showTimerTitle () {
-    const { isEditing } = this.props.app
-    const { params } = this.props.navigation.state
+    const { isEditing, currentTimer } = this.props.app
+    // const { params } = this.props.navigation.state // TODO: not needed anymore?
 
     if (isEditing) {
       return (
@@ -39,19 +39,19 @@ class TimerScreen extends React.Component {
       )
     }
 
-    if (params) {
-      return <Text> {params.title} </Text>
+    if (currentTimer) {
+      return <Text> {currentTimer.title} </Text>
     }
   }
 
   showTimerHHMM = () => {
-    const { isEditing } = this.props.app    
-    const { params } = this.props.navigation.state
+    const { isEditing, currentTimer } = this.props.app    
+    // const { params } = this.props.navigation.state // TODO: not needed naymore
     let { hh, mm } = this.state
 
-    if (params) {
-      hh = params.hh,
-      mm = params.mm
+    if (currentTimer) {
+      hh = currentTimer.hh,
+      mm = currentTimer.mm
     }
 
     if (isEditing) {

@@ -1,4 +1,5 @@
 import { APP_ACTIONS } from '../actions/types'
+import { LOGIN_ACTIONS } from '../actions/types'
 
 const INITIAL_STATE = {
   isEditing: false,
@@ -12,7 +13,10 @@ export const AppStateReducer = (state=INITIAL_STATE, action) => {
     EDIT_MODE_OFF, /* ADD_NEW_TIMER_TO_LIST */
     START_TIMER_COUNTDOWN,
     STOP_TIMER_COUNTDOWN,
-    TIMER_COMPLETE } = APP_ACTIONS
+    TIMER_COMPLETE,
+    SET_SELECTED_TIMER_DETAILS } = APP_ACTIONS
+
+    const { LOGOUT_SUCCESS } = LOGIN_ACTIONS
 
   switch (action.type) {
     case EDIT_MODE_ON:
@@ -25,6 +29,12 @@ export const AppStateReducer = (state=INITIAL_STATE, action) => {
       return { ...state, isTimerRunning: false }
     case TIMER_COMPLETE:
       return { ...state, isTimerRunning: false, isTimerComplete: true }
+    case SET_SELECTED_TIMER_DETAILS:
+      const { title, hh, mm } = action.payload
+      return { ...state, currentTimer: { title, hh, mm } }
+    case LOGOUT_SUCCESS:
+      console.log('asd')
+      return { ...state, currentTimer: null }
     default:
       return state
   }
