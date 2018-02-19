@@ -5,21 +5,28 @@ import {
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { commonStyles } from '../common/styles'
-import { cancelAddTimerAction, saveNewTimerAction } from '../actions/AppActions'
+import {
+  cancelAddTimerAction,
+  saveNewTimerAction,
+  startTimerAction,
+  stopTimerAction,
+  timerCompleteAction } from '../actions/AppActions'
 
 class TimerScreen extends React.Component {
   state = {
-    isTimerRunning: false,
     hh: '04',
     mm: '20',
-
   }
 
-  toggleTimer = () => this.setState({ isTimerRunning: !this.state.isTimerRunning }) // TODO: temporary
+  toggleTimer = () => {
+    const { startTimerAction, stopTimerAction, timerCompleteAction } = this.props
+    const { isTimerRunning } = this.props.app
+    isTimerRunning? stopTimerAction() : startTimerAction()
+  }
 
   showTimerTitle () {
-    const { isEditing } = this.props.app
-    const { params } = this.props.navigation.state
+    const { isEditing, currentTimer } = this.props.app
+    // const { params } = this.props.navigation.state // TODO: not needed anymore?
 
     if (isEditing) {
       return (
@@ -32,19 +39,19 @@ class TimerScreen extends React.Component {
       )
     }
 
-    if (params) {
-      return <Text> {params.title} </Text>
+    if (currentTimer) {
+      return <Text> {currentTimer.title} </Text>
     }
   }
 
   showTimerHHMM = () => {
-    const { isEditing } = this.props.app    
-    const { params } = this.props.navigation.state
+    const { isEditing, currentTimer } = this.props.app    
+    // const { params } = this.props.navigation.state // TODO: not needed naymore
     let { hh, mm } = this.state
 
-    if (params) {
-      hh = params.hh,
-      mm = params.mm
+    if (currentTimer) {
+      hh = currentTimer.hh,
+      mm = currentTimer.mm
     }
 
     if (isEditing) {
@@ -62,8 +69,7 @@ class TimerScreen extends React.Component {
   }
 
   showButton = () => {
-    const { isTimerRunning } = this.state
-    const { isEditing } = this.props.app
+    const { isEditing, isTimerRunning } = this.props.app
 
     if (isEditing) {
       return (
@@ -96,7 +102,10 @@ class TimerScreen extends React.Component {
 const mapDispatchToProps = dispatch => {
   return {
     cancelAddTimerAction: bindActionCreators(cancelAddTimerAction, dispatch),
-    saveNewTimerAction: bindActionCreators(saveNewTimerAction, dispatch)
+    saveNewTimerAction: bindActionCreators(saveNewTimerAction, dispatch),
+    startTimerAction: bindActionCreators(startTimerAction, dispatch),
+    stopTimerAction: bindActionCreators(stopTimerAction, dispatch),
+    timerCompleteAction: bindActionCreators(timerCompleteAction, dispatch),
   }
 }
 

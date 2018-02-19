@@ -22,6 +22,45 @@ export const cancelAddTimerAction = () => {
   }
 }
 
+export const selectTimerFromListAction = timerDetails => {
+  const { SET_SELECTED_TIMER_DETAILS } = APP_ACTIONS
+  return dispatch => {
+    dispatch({ type: SET_SELECTED_TIMER_DETAILS, payload: timerDetails })
+    dispatch(NavigationActions.navigate({
+      routeName: 'Timer',
+      params: timerDetails
+    }))
+  }
+}
+
+export const startTimerAction = () => {
+  const { START_TIMER_COUNTDOWN } = APP_ACTIONS
+  return dispatch => {
+    dispatch(NavigationActions.navigate({
+      routeName: 'TimerScreen'
+    }))
+    dispatch({ type: START_TIMER_COUNTDOWN })
+  }
+}
+
+export const stopTimerAction = () => {
+  const { STOP_TIMER_COUNTDOWN } = APP_ACTIONS
+  return dispatch => {
+    dispatch(NavigationActions.navigate({
+      routeName: 'User',
+      action: NavigationActions.navigate({ routeName: 'Timer' })
+    }))
+    dispatch({ type: STOP_TIMER_COUNTDOWN })    
+  }
+}
+
+export const timerCompleteAction = () => {
+  const { TIMER_COMPLETE } = APP_ACTIONS
+  return {
+    type: TIMER_COMPLETE
+  }
+}
+
 export const saveNewTimerAction = (newTitle, newTime) => {
   const { EDIT_MODE_OFF } = APP_ACTIONS
   const { ADD_NEW_TIMER_TO_LIST } = LOGIN_ACTIONS

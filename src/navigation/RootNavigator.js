@@ -3,7 +3,7 @@ import { StackNavigator } from 'react-navigation'
 
 import GuestTabNavigator from './GuestTabNavigator'
 import UserTabNavigator from './UserTabNavigator'
-import ErrorScreen from '../screens/ErrorScreen'
+import TimerScreen from '../screens/TimerScreen'
 
 export const RootNavigator = StackNavigator(
   {
@@ -13,8 +13,8 @@ export const RootNavigator = StackNavigator(
     User: {
       screen: UserTabNavigator
     },
-    Error: {
-      screen: ErrorScreen,
+    TimerScreen: {
+      screen: TimerScreen
     },
   },
   {
