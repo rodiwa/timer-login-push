@@ -28,11 +28,11 @@ export default TabNavigator(
           case 'Timer':
             iconName =
               Platform.OS === 'ios'
-                ? `ios-information-circle${focused ? '' : '-outline'}`
+                ? `ios-timer${focused ? '' : '-outline'}`
                 : 'md-information-circle';
             break;
           case 'Login':
-            iconName = Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link';
+            iconName = Platform.OS === 'ios' ? `ios-log-in${focused ? '' : '-outline'}` : 'md-link';
             break;
         }
         return (
