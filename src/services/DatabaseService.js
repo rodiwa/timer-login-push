@@ -40,8 +40,8 @@ class DatabaseService {
     const objTimerToSaveObj = {}
     objTimerToSaveObj[camelCasedTitle] = {
       default: false,
-      hh: '02',
-      mm: '15',
+      hours: '02',
+      minutes: '15',
       title
     }
     return new Promise((resolve, reject) => {

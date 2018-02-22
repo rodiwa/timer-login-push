@@ -1,6 +1,7 @@
 import { APP_ACTIONS, LOGIN_ACTIONS } from './types'
 import { NavigationActions } from 'react-navigation';
 import DatabaseService from '../services/DatabaseService';
+import moment from 'moment'
 
 export const addNewTimerAction = () => {
   const { EDIT_MODE_ON } = APP_ACTIONS
@@ -33,13 +34,17 @@ export const selectTimerFromListAction = timerDetails => {
   }
 }
 
-export const startTimerAction = () => {
+export const startTimerAction = (hours, minutes) => {
   const { START_TIMER_COUNTDOWN } = APP_ACTIONS
+  const endTime = moment().add({ hours, minutes }).format()
+
   return dispatch => {
     dispatch(NavigationActions.navigate({
       routeName: 'TimerScreen'
     }))
-    dispatch({ type: START_TIMER_COUNTDOWN })
+    dispatch({ type: START_TIMER_COUNTDOWN, payload: {
+      endTime
+    } })
   }
 }
 

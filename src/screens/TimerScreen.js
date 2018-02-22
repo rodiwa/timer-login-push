@@ -1,10 +1,12 @@
 import React from 'react'
+import moment from 'moment'
 import {
   View, Text, StyleSheet, Button, TextInput
 } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { commonStyles } from '../common/styles'
+import TimerLiveComponent from '../components/TimerLiveComponent'
 import {
   cancelAddTimerAction,
   saveNewTimerAction,
@@ -14,19 +16,19 @@ import {
 
 class TimerScreen extends React.Component {
   state = {
-    hh: '04',
-    mm: '20',
+    hours: '04',
+    minutes: '20',
   }
 
   toggleTimer = () => {
     const { startTimerAction, stopTimerAction, timerCompleteAction } = this.props
-    const { isTimerRunning } = this.props.app
-    isTimerRunning? stopTimerAction() : startTimerAction()
+    const { isTimerRunning, currentTimer } = this.props.app
+    const { hours, minutes } = currentTimer
+    isTimerRunning? stopTimerAction() : startTimerAction(hours, minutes)
   }
 
   showTimerTitle () {
     const { isEditing, currentTimer } = this.props.app
-    // const { params } = this.props.navigation.state // TODO: not needed anymore?
 
     if (isEditing) {
       return (
@@ -45,13 +47,14 @@ class TimerScreen extends React.Component {
   }
 
   showTimerHHMM = () => {
-    const { isEditing, currentTimer } = this.props.app    
-    // const { params } = this.props.navigation.state // TODO: not needed naymore
-    let { hh, mm } = this.state
+    const { isEditing, currentTimer, isTimerRunning } = this.props.app    
 
-    if (currentTimer) {
-      hh = currentTimer.hh,
-      mm = currentTimer.mm
+    let { hours, minutes } = currentTimer ? currentTimer : this.state
+
+    if (isTimerRunning) {
+      return (
+        <TimerLiveComponent currentTimer={currentTimer} />
+      )
     }
 
     if (isEditing) {
@@ -65,7 +68,9 @@ class TimerScreen extends React.Component {
       )
     }
     
-    return <Text> {`${hh}:${mm}`} </Text>
+    return (
+      <Text> {`${hours}:${minutes}`} </Text>
+    )
   }
 
   showButton = () => {
