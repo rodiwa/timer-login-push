@@ -8,7 +8,7 @@ export const addNewTimerAction = () => {
   return dispatch => {
     dispatch({ type: EDIT_MODE_ON })
     dispatch(NavigationActions.navigate({
-      routeName: 'Timer'
+      routeName: 'TimerScreen'
     }))
   }
 }
