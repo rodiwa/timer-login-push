@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Text, Stylesheet } from 'react-native'
-import moment from 'moment';
+import moment from 'moment'
+import { padStart } from 'lodash'
 import preciseDiff from 'moment-precise-range-plugin'
 
 export default class TimerLiveComponent extends React.Component {
@@ -33,12 +34,14 @@ export default class TimerLiveComponent extends React.Component {
 
     this.updateTimeInInterval = setInterval(()=>{
       nowTime = moment()
-      const { hours, minutes } = nowTime.preciseDiff(endTime, true)
+      let { hours, minutes } = nowTime.preciseDiff(endTime, true)
+      hours = padStart(hours, 2, '0')
+      minutes = padStart(minutes, 2, '0')
+      
       this.setState({
         hours,
         minutes
       })
-      console.log('set time?')
     }, interval)
   }
 
