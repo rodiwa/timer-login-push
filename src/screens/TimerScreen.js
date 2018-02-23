@@ -12,7 +12,8 @@ import {
   saveNewTimerAction,
   startTimerAction,
   stopTimerAction,
-  timerCompleteAction } from '../actions/AppActions'
+  userClicksOkOnTimerCompleteAction,
+  guestClicksOkOnTimerCompleteAction } from '../actions/AppActions'
 
 class TimerScreen extends React.Component {
   state = {
@@ -21,7 +22,7 @@ class TimerScreen extends React.Component {
   }
 
   toggleTimer = () => {
-    const { startTimerAction, stopTimerAction, timerCompleteAction } = this.props
+    const { startTimerAction, stopTimerAction } = this.props
     const { isTimerRunning, currentTimer } = this.props.app
     const { hours, minutes } = currentTimer
     isTimerRunning? stopTimerAction() : startTimerAction(hours, minutes)
@@ -47,9 +48,15 @@ class TimerScreen extends React.Component {
   }
 
   showTimerHHMM = () => {
-    const { isEditing, currentTimer, isTimerRunning } = this.props.app    
+    const { isEditing, currentTimer, isTimerRunning, isTimerComplete } = this.props.app    
 
     let { hours, minutes } = currentTimer ? currentTimer : this.state
+
+    if (isTimerComplete) {
+      return (
+        <Text>{'Your time(r) is up! ;)'}</Text>
+      )
+    }
 
     if (isTimerRunning) {
       return (
@@ -74,7 +81,16 @@ class TimerScreen extends React.Component {
   }
 
   showButton = () => {
-    const { isEditing, isTimerRunning } = this.props.app
+    const { isEditing, isTimerRunning, isTimerComplete } = this.props.app
+    const { userClicksOkOnTimerCompleteAction, guestClicksOkOnTimerCompleteAction, isUserLoggedIn } = this.props
+
+    if (isTimerComplete) {
+      return (
+        <Button
+          title={'Done'}
+          onPress={() => isUserLoggedIn ? userClicksOkOnTimerCompleteAction() : guestClicksOkOnTimerCompleteAction() } />
+      )
+    }
 
     if (isEditing) {
       return (
@@ -110,12 +126,13 @@ const mapDispatchToProps = dispatch => {
     saveNewTimerAction: bindActionCreators(saveNewTimerAction, dispatch),
     startTimerAction: bindActionCreators(startTimerAction, dispatch),
     stopTimerAction: bindActionCreators(stopTimerAction, dispatch),
-    timerCompleteAction: bindActionCreators(timerCompleteAction, dispatch),
+    userClicksOkOnTimerCompleteAction: bindActionCreators(userClicksOkOnTimerCompleteAction, dispatch),
+    guestClicksOkOnTimerCompleteAction: bindActionCreators(guestClicksOkOnTimerCompleteAction, dispatch),
   }
 }
 
 const mapStateToProps = state => {
-  return { app: state.app }
+  return { app: state.app, isUserLoggedIn: state.login.isLoggedIn }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TimerScreen)

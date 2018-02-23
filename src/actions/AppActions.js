@@ -49,10 +49,32 @@ export const startTimerAction = (hours, minutes) => {
 }
 
 export const stopTimerAction = () => {
-  const { STOP_TIMER_COUNTDOWN } = APP_ACTIONS
+  const { RESET_TIMER } = APP_ACTIONS
   return dispatch => {
     dispatch(NavigationActions.navigate({
       routeName: 'User',
+      action: NavigationActions.navigate({ routeName: 'Timer' })
+    }))
+    dispatch({ type: RESET_TIMER })
+  }
+}
+
+export const userClicksOkOnTimerCompleteAction = () => {
+  const { RESET_TIMER } = APP_ACTIONS  
+  return dispatch => {
+    dispatch(NavigationActions.navigate({
+      routeName: 'User',
+      action: NavigationActions.navigate({ routeName: 'Timer' })
+    }))
+    dispatch({ type: RESET_TIMER })    
+  }
+}
+
+export const guestClicksOkOnTimerCompleteAction = () => {
+  const { STOP_TIMER_COUNTDOWN } = APP_ACTIONS  
+  return dispatch => {
+    dispatch(NavigationActions.navigate({
+      routeName: 'Guest',
       action: NavigationActions.navigate({ routeName: 'Timer' })
     }))
     dispatch({ type: STOP_TIMER_COUNTDOWN })    

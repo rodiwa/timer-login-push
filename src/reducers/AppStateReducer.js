@@ -14,7 +14,8 @@ export const AppStateReducer = (state=INITIAL_STATE, action) => {
     START_TIMER_COUNTDOWN,
     STOP_TIMER_COUNTDOWN,
     TIMER_COMPLETE,
-    SET_SELECTED_TIMER_DETAILS } = APP_ACTIONS
+    SET_SELECTED_TIMER_DETAILS,
+    RESET_TIMER } = APP_ACTIONS
 
     const { LOGOUT_SUCCESS } = LOGIN_ACTIONS
 
@@ -33,6 +34,8 @@ export const AppStateReducer = (state=INITIAL_STATE, action) => {
       return { ...state, isTimerRunning: false }
     case TIMER_COMPLETE:
       return { ...state, isTimerRunning: false, isTimerComplete: true }
+    case RESET_TIMER:
+      return { ...state, isTimerRunning: false, isEditing: false, isTimerComplete: false }
     case SET_SELECTED_TIMER_DETAILS:
       const { title, hours, minutes } = action.payload
       return { ...state, currentTimer: { title, hours, minutes } }
