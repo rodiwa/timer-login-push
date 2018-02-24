@@ -24,23 +24,22 @@ export default TabNavigator(
   {
     navigationOptions: ({ navigation }) => ({
       headerMode: 'screen',
-      iniinitialRouteName: 'Timer', // TODO: not working
       swipeEnabled: true,
       tabBarIcon: ({ focused }) => {
         const { routeName } = navigation.state;
         let iconName;
         switch (routeName) {
           case 'List':
-            iconName = Platform.OS === 'ios' ? `ios-list${focused ? '' : '-outline'}` : 'md-list';
+            iconName = Platform.OS === 'ios' ? `ios-list${focused ? '-box' : ''}` : 'md-list';
             break;
           case 'Timer':
             iconName =
               Platform.OS === 'ios'
-                ? `ios-information-circle${focused ? '' : '-outline'}`
+                ? `ios-timer${focused ? '' : '-outline'}`
                 : 'md-information-circle';
             break;
           case 'Logout':
-            iconName = Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link';
+            iconName = Platform.OS === 'ios' ? `ios-settings${focused ? '' : '-outline'}` : 'md-link';
             break;
         }
         return (

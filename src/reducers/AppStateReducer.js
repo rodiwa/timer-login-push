@@ -14,7 +14,8 @@ export const AppStateReducer = (state=INITIAL_STATE, action) => {
     START_TIMER_COUNTDOWN,
     STOP_TIMER_COUNTDOWN,
     TIMER_COMPLETE,
-    SET_SELECTED_TIMER_DETAILS } = APP_ACTIONS
+    SET_SELECTED_TIMER_DETAILS,
+    RESET_TIMER } = APP_ACTIONS
 
     const { LOGOUT_SUCCESS } = LOGIN_ACTIONS
 
@@ -24,14 +25,20 @@ export const AppStateReducer = (state=INITIAL_STATE, action) => {
     case EDIT_MODE_OFF:
       return Object.assign({}, state, { isEditing: false })
     case START_TIMER_COUNTDOWN:
-      return { ...state, isTimerRunning: true }
+      const { endTime } = action.payload
+      return { ...state, currentTimer: {
+        ...state.currentTimer,
+        endTime
+      }, isTimerRunning: true }
     case STOP_TIMER_COUNTDOWN:
       return { ...state, isTimerRunning: false }
     case TIMER_COMPLETE:
       return { ...state, isTimerRunning: false, isTimerComplete: true }
+    case RESET_TIMER:
+      return { ...state, isTimerRunning: false, isEditing: false, isTimerComplete: false }
     case SET_SELECTED_TIMER_DETAILS:
-      const { title, hh, mm } = action.payload
-      return { ...state, currentTimer: { title, hh, mm } }
+      const { title, hours, minutes } = action.payload
+      return { ...state, currentTimer: { title, hours, minutes } }
     case LOGOUT_SUCCESS:
       console.log('asd')
       return { ...state, currentTimer: null }

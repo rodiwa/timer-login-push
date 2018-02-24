@@ -1,13 +1,14 @@
 import { APP_ACTIONS, LOGIN_ACTIONS } from './types'
 import { NavigationActions } from 'react-navigation';
 import DatabaseService from '../services/DatabaseService';
+import moment from 'moment'
 
 export const addNewTimerAction = () => {
   const { EDIT_MODE_ON } = APP_ACTIONS
   return dispatch => {
     dispatch({ type: EDIT_MODE_ON })
     dispatch(NavigationActions.navigate({
-      routeName: 'Timer'
+      routeName: 'TimerScreen'
     }))
   }
 }
@@ -33,21 +34,47 @@ export const selectTimerFromListAction = timerDetails => {
   }
 }
 
-export const startTimerAction = () => {
+export const startTimerAction = (hours, minutes) => {
   const { START_TIMER_COUNTDOWN } = APP_ACTIONS
+  const endTime = moment().add({ hours, minutes }).format()
+
   return dispatch => {
     dispatch(NavigationActions.navigate({
       routeName: 'TimerScreen'
     }))
-    dispatch({ type: START_TIMER_COUNTDOWN })
+    dispatch({ type: START_TIMER_COUNTDOWN, payload: {
+      endTime
+    } })
   }
 }
 
 export const stopTimerAction = () => {
-  const { STOP_TIMER_COUNTDOWN } = APP_ACTIONS
+  const { RESET_TIMER } = APP_ACTIONS
   return dispatch => {
     dispatch(NavigationActions.navigate({
       routeName: 'User',
+      action: NavigationActions.navigate({ routeName: 'Timer' })
+    }))
+    dispatch({ type: RESET_TIMER })
+  }
+}
+
+export const userClicksOkOnTimerCompleteAction = () => {
+  const { RESET_TIMER } = APP_ACTIONS  
+  return dispatch => {
+    dispatch(NavigationActions.navigate({
+      routeName: 'User',
+      action: NavigationActions.navigate({ routeName: 'Timer' })
+    }))
+    dispatch({ type: RESET_TIMER })    
+  }
+}
+
+export const guestClicksOkOnTimerCompleteAction = () => {
+  const { STOP_TIMER_COUNTDOWN } = APP_ACTIONS  
+  return dispatch => {
+    dispatch(NavigationActions.navigate({
+      routeName: 'Guest',
       action: NavigationActions.navigate({ routeName: 'Timer' })
     }))
     dispatch({ type: STOP_TIMER_COUNTDOWN })    
