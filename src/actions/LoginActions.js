@@ -4,6 +4,8 @@ import { GOOGLE_CLIENT } from '../constants/app/Auth'
 import DatabaseService from '../services/DatabaseService.js'
 import { NavigationActions } from 'react-navigation'
 import { gotoUserLandingPageAction, gotoGuestLandingPageAction } from './NavActions'
+import { showFirstTimerInListOnLogin } from './AppActions'
+import { isEmpty } from 'lodash'
 
 const {
   LOGIN_GOOGLE_ATTEMPT,
@@ -33,7 +35,17 @@ export const loginGoogleAction = navigate => {
           await DatabaseService.addNewuser(user)
         }
         dispatch({ type: LOGIN_SUCCESS, payload: { user, userData } })
-        dispatch(gotoUserLandingPageAction(userData))        
+
+        if (userData) {
+          // if timer is added previosuly, set the first timer as current, only THEN open timer screen
+          const timerKeys = Object.keys(userData.timers)
+          const firstTimer = userData.timers[timerKeys[0]]
+
+          dispatch(showFirstTimerInListOnLogin(firstTimer))
+        } else {
+          // if no timer added yet, nav to list screen after login
+          dispatch(gotoUserLandingPageAction(userData, true))
+        }
       } else if (result.type === 'cancelled') {
         dispatch({ type: LOGIN_CANCEL })
         dispatch(gotoGuestandingPageAction())
