@@ -34,6 +34,17 @@ export const selectTimerFromListAction = timerDetails => {
   }
 }
 
+export const showFirstTimerInListOnLogin = timerDetails => {
+  const { SET_SELECTED_TIMER_DETAILS } = APP_ACTIONS
+  return dispatch => {
+    dispatch({ type: SET_SELECTED_TIMER_DETAILS, payload: timerDetails })
+    dispatch(NavigationActions.navigate({
+      routeName: 'User',
+      action: NavigationActions.navigate({ routeName: 'Timer', params: timerDetails })
+    }))
+  }
+}
+
 export const startTimerAction = (hours, minutes) => {
   const { START_TIMER_COUNTDOWN } = APP_ACTIONS
   const endTime = moment().add({ hours, minutes }).format()
