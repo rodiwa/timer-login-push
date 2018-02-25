@@ -15,7 +15,7 @@ class ListScreen extends React.Component {
     const { userData, selectTimerFromListAction } = this.props
     const arrTimer = []
 
-    if (userData && !userData.timers) {
+    if (!userData) {
       return (<Text>You have not saved any timers yet!</Text>)
     }
 
