@@ -71,7 +71,9 @@ class TimerScreen extends React.Component {
     if (isEditing) {
       const { defaultTime } = this.props
       return (
-        Platform.OS === 'ios' ? <TimePickerIos defaults={defaultTime} updateHourByUser={this.props.updateHourByUserAction} updateMinuteByUser={this.props.updateMinuteByUserAction} /> : <TimePickerIos />
+        Platform.OS === 'ios' ?
+          <TimePickerIos defaults={defaultTime} updateHourByUser={this.props.updateHourByUserAction} updateMinuteByUser={this.props.updateMinuteByUserAction} /> :
+          <TimePickerIos defaults={defaultTime} updateHourByUser={this.props.updateHourByUserAction} updateMinuteByUser={this.props.updateMinuteByUserAction} />
       )
     }
     
