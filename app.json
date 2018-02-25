@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "timer-login",
-    "description": "A very interesting project.",
+    "name": "Countdown Thingie",
+    "description": "Meh.",
     "slug": "timer-login",
     "privacy": "public",
     "sdkVersion": "25.0.0",
@@ -15,7 +15,11 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.rodiwa.countdown"
+    },
+    "android": {
+      "package": "com.rodiwa.countdown"
     }
   }
 }
