@@ -4,7 +4,11 @@ import { LOGIN_ACTIONS } from '../actions/types'
 const INITIAL_STATE = {
   isEditing: false,
   isTimerRunning: false,
-  isTimerComplete: false
+  isTimerComplete: false,
+  defaultTime: {
+    hour: '04',
+    minutes: '30'
+  }
 }
 
 export const AppStateReducer = (state=INITIAL_STATE, action) => {
@@ -15,7 +19,9 @@ export const AppStateReducer = (state=INITIAL_STATE, action) => {
     STOP_TIMER_COUNTDOWN,
     TIMER_COMPLETE,
     SET_SELECTED_TIMER_DETAILS,
-    RESET_TIMER } = APP_ACTIONS
+    RESET_TIMER,
+    SET_HOUR_USER,
+    SET_MINUTES_USER } = APP_ACTIONS
 
     const { LOGOUT_SUCCESS } = LOGIN_ACTIONS
 
@@ -40,8 +46,11 @@ export const AppStateReducer = (state=INITIAL_STATE, action) => {
       const { title, hours, minutes } = action.payload
       return { ...state, currentTimer: { title, hours, minutes } }
     case LOGOUT_SUCCESS:
-      console.log('asd')
       return { ...state, currentTimer: null }
+    case SET_MINUTES_USER:
+      return { ...state, defaultTime: { ...state.defaultTime, minutes: action.payload } }
+    case SET_HOUR_USER:
+      return { ...state, defaultTime: { ...state.defaultTime, hour: action.payload } }
     default:
       return state
   }
