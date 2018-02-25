@@ -88,11 +88,13 @@ export const timerCompleteAction = () => {
   }
 }
 
-export const saveNewTimerAction = (newTitle, newTime) => {
+export const saveNewTimerAction = (newTitle) => {
   const { EDIT_MODE_OFF } = APP_ACTIONS
   const { ADD_NEW_TIMER_TO_LIST } = LOGIN_ACTIONS
+
   return async (dispatch, getState) => {
     const userid = getState().login.userDetails.user.id
+    const newTime = getState().app.defaultTime
     // LOADING_ON
 
     const saveResult = await DatabaseService.saveNewTimerInList(newTitle, newTime, userid)
@@ -110,5 +112,21 @@ export const saveNewTimerAction = (newTitle, newTime) => {
       routeName: 'List'
     }))
     // LOADING_OFF
+  }
+}
+
+export const updateHourByUserAction = (hour) => {
+  const { SET_HOUR_USER } = APP_ACTIONS
+  return {
+    type: SET_HOUR_USER,
+    payload: hour
+  }
+}
+
+export const updateMinuteByUserAction = (minutes) => {
+  const { SET_MINUTES_USER } = APP_ACTIONS
+  return {
+    type: SET_MINUTES_USER,
+    payload: minutes
   }
 }

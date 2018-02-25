@@ -38,16 +38,14 @@ export const LoginReducer = (state=INITIAL_STATE, action) => {
     case LOGOUT_ERROR:
       return Object.assign({}, state, { isLoggedInAnonymous: false, isLoggingInOut: false })
     case ADD_NEW_TIMER_TO_LIST: // TODO: move this to app state?
+      let timers = state.userDetails.userData ? state.userDetails.userData.timers : []
+      timers = { ...timers, ...action.payload }
       return {
         ...state,
         userDetails: {
           ...state.userDetails,
           userData: {
-            ...state.userDetails.userData,
-            timers: {
-              ...state.userDetails.userData.timers,
-              ...action.payload
-            }
+            timers: {...timers}
           }
         }
       }

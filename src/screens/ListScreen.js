@@ -12,13 +12,14 @@ import { addNewTimerAction, selectTimerFromListAction } from '../actions/AppActi
 
 class ListScreen extends React.Component {
   renderTimerList () {
-    const { timers, selectTimerFromListAction } = this.props
+    const { userData, selectTimerFromListAction } = this.props
     const arrTimer = []
 
-    if (!timers) {
+    if (!userData) {
       return (<Text>You have not saved any timers yet!</Text>)
     }
 
+    const { timers } = userData
     for (const timer in timers) {
       arrTimer.push(timers[timer])
     }
@@ -27,10 +28,7 @@ class ListScreen extends React.Component {
   }
 
   renderAddNewTimerBtn () {
-    const { isTimerRunning } = this.props
-    if (!isTimerRunning) {
-      return <Button title={TIMER_MSGS.ADD_NEW} onPress={()=>this.props.addNewTimerAction()} />
-    }
+    return <Button title={TIMER_MSGS.ADD_NEW} onPress={()=>this.props.addNewTimerAction()} />
   }
 
   render () {
@@ -44,32 +42,10 @@ class ListScreen extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { timers } = state.login.userDetails.userData
-  const { isTimerRunning } = state.login.userDetails.userData
-  
-  // offline
-  // TODO: remove offline code
-  // const timers = {
-  //   goHome: {
-  //     hh: '10',
-  //     mm: '20',
-  //     title: 'Go home'
-  //   },
-  //   fullOfficeDay: {
-  //     hh: '07',
-  //     mm: '30',
-  //     title: 'Full day office'
-  //   },
-  //   tennisTime: {
-  //     hh: '02',
-  //     mm: '00',
-  //     title: 'Tennis time'
-  //   }
-  // }
+  const { userData } = state.login.userDetails
 
   return {
-    timers,
-    isTimerRunning
+    userData,
   }
 }
 

@@ -1,19 +1,23 @@
 import React from 'react'
 import moment from 'moment'
 import {
-  View, Text, StyleSheet, Button, TextInput
+  View, Text, StyleSheet, Button, TextInput, Platform
 } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { commonStyles } from '../common/styles'
 import TimerLiveComponent from '../components/TimerLiveComponent'
+import TimePickerIos from '../components/TimePickerIos'
+import TimePickerAndroid from '../components/TimePickerAndroid'
 import {
   cancelAddTimerAction,
   saveNewTimerAction,
   startTimerAction,
   stopTimerAction,
   userClicksOkOnTimerCompleteAction,
-  guestClicksOkOnTimerCompleteAction } from '../actions/AppActions'
+  guestClicksOkOnTimerCompleteAction,
+  updateHourByUserAction,
+  updateMinuteByUserAction } from '../actions/AppActions'
 
 class TimerScreen extends React.Component {
   state = {
@@ -65,13 +69,9 @@ class TimerScreen extends React.Component {
     }
 
     if (isEditing) {
+      const { defaultTime } = this.props
       return (
-        <TextInput
-          style={styles.textInput}
-          placeholder="HH:MM"
-          onChangeText={(newTimeInHHMM) => this.setState({newTimeInHHMM})}
-          value={this.state.text}
-        />
+        Platform.OS === 'ios' ? <TimePickerIos defaults={defaultTime} updateHourByUser={this.props.updateHourByUserAction} updateMinuteByUser={this.props.updateMinuteByUserAction} /> : <TimePickerIos />
       )
     }
     
@@ -95,7 +95,7 @@ class TimerScreen extends React.Component {
     if (isEditing) {
       return (
         <View>
-          <Button title="Add" onPress={()=>this.props.saveNewTimerAction(this.state.newTimerTitle, this.state.newTimeInHHMM)} />
+          <Button title="Add" onPress={()=>this.props.saveNewTimerAction(this.state.newTimerTitle)} />
           <Button title="Cancel" onPress={()=>this.props.cancelAddTimerAction()} />
         </View>
       )
@@ -128,11 +128,13 @@ const mapDispatchToProps = dispatch => {
     stopTimerAction: bindActionCreators(stopTimerAction, dispatch),
     userClicksOkOnTimerCompleteAction: bindActionCreators(userClicksOkOnTimerCompleteAction, dispatch),
     guestClicksOkOnTimerCompleteAction: bindActionCreators(guestClicksOkOnTimerCompleteAction, dispatch),
+    updateHourByUserAction: bindActionCreators(updateHourByUserAction, dispatch),
+    updateMinuteByUserAction: bindActionCreators(updateMinuteByUserAction, dispatch),
   }
 }
 
 const mapStateToProps = state => {
-  return { app: state.app, isUserLoggedIn: state.login.isLoggedIn }
+  return { app: state.app, isUserLoggedIn: state.login.isLoggedIn, defaultTime: state.app.defaultTime }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TimerScreen)
