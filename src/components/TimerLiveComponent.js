@@ -6,6 +6,19 @@ import moment from 'moment'
 import { padStart } from 'lodash'
 import preciseDiff from 'moment-precise-range-plugin'
 import { timerCompleteAction } from '../actions/AppActions'
+import { Notifications } from 'expo'
+
+const PUSH_CONFIG_OPTS = {
+  title: 'Countdown Timer Thingie',
+  body: 'Your time(r) is up!',
+  ios: {
+    sound: true
+  },
+  android: {
+    sound: true,
+    vibrate: true
+  }
+}
 
 class TimerLiveComponent extends React.Component {
   constructor (props) {
@@ -17,8 +30,20 @@ class TimerLiveComponent extends React.Component {
   }
 
   componentDidMount () {
+    // disable any previous PUSH instances, because we are now on the app itself. no push notif to be shown when app is active. <--- 1
+    Notifications.cancelAllScheduledNotificationsAsync()
     this.startTicker()
   }
+
+  // TODO: might need to ask iOS user for permission for PUSH. Not tried. Will cross that bridge when we get there.
+  // https://medium.com/@Laurens_Lang/local-notifications-in-expo-867e2af1ca97
+  // async componentDidMount() {
+  //   let result = await   
+  //   Permissions.askAsync(Permissions.NOTIFICATIONS);
+  //   if (Constants.lisDevice && resut.status === ‘granted’) {
+  //    console.log(‘Notification permissions granted.’)
+  //   }
+  // }
 
   componentWillUnmount () {
     this.clearTimerIntervals()
@@ -31,7 +56,11 @@ class TimerLiveComponent extends React.Component {
 
   checkIfTimerIsComplete (endTime) {
     if (moment() > endTime) {
-      this.clearTimerIntervals()    
+      this.clearTimerIntervals()
+
+      // disable any scheduled PUSH notif as timer is now up <--- 1
+      Notifications.cancelAllScheduledNotificationsAsync()
+
       return this.props.timerCompleteAction()
     }
   }
@@ -40,8 +69,14 @@ class TimerLiveComponent extends React.Component {
     const interval = 1000 * 60 * 0.5
 
     const endTime = moment(this.props.currentTimer.endTime)
-
     this.checkIfTimerIsComplete(endTime)
+
+    // schedule new PUSH notif with updated endTime <---- 2
+    Notifications.scheduleLocalNotificationAsync(PUSH_CONFIG_OPTS, {
+      time: new Date(endTime.format())
+    })
+
+    // add event listener for local notifications, so we can clearEventListeners <--- 3 TODO: needed? add for performance?
 
     let nowTime
 

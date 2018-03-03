@@ -23,8 +23,10 @@ export const loginGoogleAction = navigate => {
     try {
       dispatch({ type: LOGIN_GOOGLE_ATTEMPT })
       const result = await Expo.Google.logInAsync({
+        behavior: 'web',
         androidClientId: GOOGLE_CLIENT.ANDROID,
         iosClientId: GOOGLE_CLIENT.IOS,
+        androidStandaloneAppClientId: GOOGLE_CLIENT.OAUTHCLIENTID,
         scopes: ['profile', 'email']
       })
       if (result.type === 'success') {
