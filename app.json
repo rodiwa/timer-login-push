@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "timer-login",
-    "description": "A very interesting project.",
+    "name": "Countdown Thingie",
+    "description": "Meh.",
     "slug": "timer-login",
     "privacy": "public",
     "sdkVersion": "25.0.0",
@@ -15,7 +15,17 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.rodiwa.countdown"
+    },
+    "android": {
+      "config": {
+        "googleSignIn": {
+          "apiKey": "AIzaSyDO-Wjx6fz-dgylQR_94RiOmdwh6Ac07R4",
+          "certificateHash": "881E7E0C1C15992D16C2F2C452410D165BEB8847"
+        }
+      },
+      "package": "com.rodiwa.countdown"
     }
   }
 }
