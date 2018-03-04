@@ -13,6 +13,35 @@ export const addNewTimerAction = () => {
   }
 }
 
+export const editTimerAction = isUerLoggedIn => {
+  const { EDIT_MODE_ON, EDIT_EXISTING_TIMER_ON } = APP_ACTIONS
+
+  return dispatch => {
+    dispatch({ type: EDIT_MODE_ON })
+    dispatch({ type: EDIT_EXISTING_TIMER_ON })
+    dispatch(NavigationActions.navigate({
+      routeName: 'TimerScreen'
+    }))
+  }
+}
+
+export const saveEditTimerAction = () => {
+
+}
+
+export const cancelEditTimerAction = () => {
+  const { EDIT_MODE_OFF, EDIT_EXISTING_TIMER_OFF } = APP_ACTIONS
+
+  return dispatch => {
+    dispatch({ type: EDIT_MODE_OFF })
+    dispatch({ type: EDIT_EXISTING_TIMER_OFF })
+    dispatch(NavigationActions.navigate({
+      routeName: 'Guest',
+      action: NavigationActions.navigate({ routeName: 'Timer' })
+    }))
+  }
+}
+
 export const cancelAddTimerAction = () => {
   const { EDIT_MODE_OFF } = APP_ACTIONS
   return dispatch => {
@@ -61,9 +90,11 @@ export const startTimerAction = (hours, minutes) => {
 
 export const stopTimerAction = () => {
   const { RESET_TIMER } = APP_ACTIONS
-  return dispatch => {
+  return (dispatch, getState) => {
+    const { isLoggedIn } = getState().login
+    const navToUserType = isLoggedIn ? 'User' : 'Guest'
     dispatch(NavigationActions.navigate({
-      routeName: 'User',
+      routeName: navToUserType,
       action: NavigationActions.navigate({ routeName: 'Timer' })
     }))
     dispatch({ type: RESET_TIMER })
@@ -126,11 +157,11 @@ export const saveNewTimerAction = (newTitle) => {
   }
 }
 
-export const updateHourByUserAction = (hour) => {
+export const updateHourByUserAction = (hours) => {
   const { SET_HOUR_USER } = APP_ACTIONS
   return {
     type: SET_HOUR_USER,
-    payload: hour
+    payload: hours
   }
 }
 
