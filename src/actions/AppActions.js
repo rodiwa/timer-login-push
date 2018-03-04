@@ -101,25 +101,16 @@ export const stopTimerAction = () => {
   }
 }
 
-export const userClicksOkOnTimerCompleteAction = () => {
-  const { RESET_TIMER } = APP_ACTIONS  
-  return dispatch => {
+export const onClickTimerDoneAction = () => {
+  const { RESET_TIMER } = APP_ACTIONS
+
+  return (dispatch, getState) => {
+    const { isLoggedIn } = getState().login
     dispatch(NavigationActions.navigate({
-      routeName: 'User',
+      routeName: isLoggedIn ? 'User' : 'Guest',
       action: NavigationActions.navigate({ routeName: 'Timer' })
     }))
     dispatch({ type: RESET_TIMER })    
-  }
-}
-
-export const guestClicksOkOnTimerCompleteAction = () => {
-  const { STOP_TIMER_COUNTDOWN } = APP_ACTIONS  
-  return dispatch => {
-    dispatch(NavigationActions.navigate({
-      routeName: 'Guest',
-      action: NavigationActions.navigate({ routeName: 'Timer' })
-    }))
-    dispatch({ type: STOP_TIMER_COUNTDOWN })    
   }
 }
 

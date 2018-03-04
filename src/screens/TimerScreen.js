@@ -14,8 +14,7 @@ import {
   saveNewTimerAction,
   startTimerAction,
   stopTimerAction,
-  userClicksOkOnTimerCompleteAction,
-  guestClicksOkOnTimerCompleteAction,
+  onClickTimerDoneAction,
   updateHourByUserAction,
   updateMinuteByUserAction,
   editTimerAction,
@@ -88,17 +87,8 @@ class TimerScreen extends React.Component {
     )
   }
 
-  onClickAddorEditBtn = () => {
-    const { isEditingExistingTimer } = this.props
-    if (isEditingExistingTimer) {
-      this.props.saveEditTimerAction() // TODO: not created yet
-    } else {
-      this.props.saveNewTimerAction(this.state.newTimerTitle)
-    }
-  }
-
   onClickCancelBtn = () => {
-    const { isEditingExistingTimer } = this.props
+    const { isEditingExistingTimer } = this.props.app
     if (isEditingExistingTimer) {
       this.props.cancelEditTimerAction() // TODO: not created yet
     } else {
@@ -108,22 +98,23 @@ class TimerScreen extends React.Component {
 
   showStartStopButtons = () => {
     const { isEditing, isTimerRunning, isTimerComplete } = this.props.app
-    const { userClicksOkOnTimerCompleteAction, guestClicksOkOnTimerCompleteAction, isUserLoggedIn } = this.props
+    const { onClickTimerDoneAction, isUserLoggedIn } = this.props
 
     if (isTimerComplete) {
       return (
         <Button
           title={'Done'}
-          onPress={() => isUserLoggedIn ? userClicksOkOnTimerCompleteAction() : guestClicksOkOnTimerCompleteAction() } />
+          onPress={() => onClickTimerDoneAction() } />
       )
     }
 
     if (isEditing) {
-      const btnLabel = this.props.isEditingExistingTimer ? 'Save' : 'Add'
+      const { isEditingExistingTimer } = this.props.app
+      const btnLabel = isEditingExistingTimer ? 'Done' : 'Cancel'
       return (
         <View>
-          <Button title={btnLabel} onPress={()=>this.onClickAddorEditBtn()} />
-          <Button title="Cancel" onPress={()=>this.onClickCancelBtn()} />
+          { !isEditingExistingTimer && <Button title='Add' onPress={()=>this.props.saveNewTimerAction(this.state.newTimerTitle)} /> }
+          <Button title={btnLabel} onPress={()=>this.onClickCancelBtn()} />
         </View>
       )
     }
@@ -137,9 +128,9 @@ class TimerScreen extends React.Component {
   }
 
   showEditDeleteButtons () {
-    const { isEditing, isTimerRunning } = this.props.app
+    const { isEditing, isTimerRunning, isTimerComplete } = this.props.app
     const { isUserLoggedIn } = this.props
-    return ( !isEditing && !isUserLoggedIn && !isTimerRunning &&
+    return ( !isEditing && !isUserLoggedIn && !isTimerRunning && !isTimerComplete &&
       <View>
         <Button title="Edit" onPress={()=>this.props.editTimerAction(isUserLoggedIn)} />
         { isUserLoggedIn && <Button title="Delete" onPress={()=>null} /> }
@@ -165,8 +156,7 @@ const mapDispatchToProps = dispatch => {
     saveNewTimerAction: bindActionCreators(saveNewTimerAction, dispatch),
     startTimerAction: bindActionCreators(startTimerAction, dispatch),
     stopTimerAction: bindActionCreators(stopTimerAction, dispatch),
-    userClicksOkOnTimerCompleteAction: bindActionCreators(userClicksOkOnTimerCompleteAction, dispatch),
-    guestClicksOkOnTimerCompleteAction: bindActionCreators(guestClicksOkOnTimerCompleteAction, dispatch),
+    onClickTimerDoneAction: bindActionCreators(onClickTimerDoneAction, dispatch),
     updateHourByUserAction: bindActionCreators(updateHourByUserAction, dispatch),
     updateMinuteByUserAction: bindActionCreators(updateMinuteByUserAction, dispatch),
     editTimerAction: bindActionCreators(editTimerAction, dispatch),    

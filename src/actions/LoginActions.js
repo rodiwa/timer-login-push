@@ -64,6 +64,10 @@ export const logoutAction = navigate => {
   return dispatch => {
     dispatch({ type: LOGOUT_ATTEMPT })
     dispatch(gotoGuestLandingPageAction())
+
+    // TODO: in future, reset redux-persist state on logout success; persistStore(store).purge()
+    // persistStore(store).purge()
+
     dispatch({ type: LOGOUT_SUCCESS })
   }
 }

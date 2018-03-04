@@ -51,8 +51,8 @@ export default class TimePickerIos extends React.Component {
         <Picker style={styles.picker}
           selectedValue={this.state.minutes}
           onValueChange={(minutes, itemIndex) => this.updateMinutes(minutes)}>
-            <Picker.Item label="00" value="00" />
-            <Picker.Item label="03" value="03" />
+            <Picker.Item label="02-t" value="02" />
+            <Picker.Item label="03-t" value="03" />
             <Picker.Item label="10" value="10" />
             <Picker.Item label="20" value="20" />
             <Picker.Item label="30" value="30" />
