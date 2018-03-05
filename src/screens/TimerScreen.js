@@ -14,10 +14,12 @@ import {
   saveNewTimerAction,
   startTimerAction,
   stopTimerAction,
-  userClicksOkOnTimerCompleteAction,
-  guestClicksOkOnTimerCompleteAction,
+  onClickTimerDoneAction,
   updateHourByUserAction,
-  updateMinuteByUserAction } from '../actions/AppActions'
+  updateMinuteByUserAction,
+  editTimerAction,
+  saveEditTimerAction,
+  cancelEditTimerAction } from '../actions/AppActions'
 
 class TimerScreen extends React.Component {
   state = {}
@@ -30,7 +32,12 @@ class TimerScreen extends React.Component {
   }
 
   showTimerTitle () {
-    const { isEditing, currentTimer } = this.props.app
+    const { isEditing, currentTimer, isEditingExistingTimer } = this.props.app
+
+    // TODO: show timer title only for logged in users
+    if (isEditingExistingTimer) {
+      return
+    }
 
     if (isEditing) {
       return (
@@ -49,7 +56,7 @@ class TimerScreen extends React.Component {
   }
 
   showTimerHHMM = () => {
-    const { isEditing, currentTimer, isTimerRunning, isTimerComplete, defaultTime } = this.props.app
+    const { isEditing, currentTimer, defaultTime, isTimerRunning, isTimerComplete } = this.props.app
     const { isUserLoggedIn } = this.props
 
     let { hours, minutes } = isUserLoggedIn ? currentTimer : defaultTime
@@ -80,23 +87,34 @@ class TimerScreen extends React.Component {
     )
   }
 
-  showButton = () => {
+  onClickCancelBtn = () => {
+    const { isEditingExistingTimer } = this.props.app
+    if (isEditingExistingTimer) {
+      this.props.cancelEditTimerAction() // TODO: not created yet
+    } else {
+      this.props.cancelAddTimerAction()
+    }
+  }
+
+  showStartStopButtons = () => {
     const { isEditing, isTimerRunning, isTimerComplete } = this.props.app
-    const { userClicksOkOnTimerCompleteAction, guestClicksOkOnTimerCompleteAction, isUserLoggedIn } = this.props
+    const { onClickTimerDoneAction, isUserLoggedIn } = this.props
 
     if (isTimerComplete) {
       return (
         <Button
           title={'Done'}
-          onPress={() => isUserLoggedIn ? userClicksOkOnTimerCompleteAction() : guestClicksOkOnTimerCompleteAction() } />
+          onPress={() => onClickTimerDoneAction() } />
       )
     }
 
     if (isEditing) {
+      const { isEditingExistingTimer } = this.props.app
+      const btnLabel = isEditingExistingTimer ? 'Done' : 'Cancel'
       return (
         <View>
-          <Button title="Add" onPress={()=>this.props.saveNewTimerAction(this.state.newTimerTitle)} />
-          <Button title="Cancel" onPress={()=>this.props.cancelAddTimerAction()} />
+          { !isEditingExistingTimer && <Button title='Add' onPress={()=>this.props.saveNewTimerAction(this.state.newTimerTitle)} /> }
+          <Button title={btnLabel} onPress={()=>this.onClickCancelBtn()} />
         </View>
       )
     }
@@ -109,12 +127,24 @@ class TimerScreen extends React.Component {
     )
   }
 
+  showEditDeleteButtons () {
+    const { isEditing, isTimerRunning, isTimerComplete } = this.props.app
+    const { isUserLoggedIn } = this.props
+    return ( !isEditing && !isUserLoggedIn && !isTimerRunning && !isTimerComplete &&
+      <View>
+        <Button title="Edit" onPress={()=>this.props.editTimerAction(isUserLoggedIn)} />
+        { isUserLoggedIn && <Button title="Delete" onPress={()=>null} /> }
+      </View>
+    )
+  }
+
   render() {
     return (
       <View style={commonStyles.view}>
         { this.showTimerTitle() }
         { this.showTimerHHMM() }
-        { this.showButton() }
+        { this.showStartStopButtons() }
+        { this.showEditDeleteButtons() }        
       </View>
     )
   }
@@ -126,10 +156,12 @@ const mapDispatchToProps = dispatch => {
     saveNewTimerAction: bindActionCreators(saveNewTimerAction, dispatch),
     startTimerAction: bindActionCreators(startTimerAction, dispatch),
     stopTimerAction: bindActionCreators(stopTimerAction, dispatch),
-    userClicksOkOnTimerCompleteAction: bindActionCreators(userClicksOkOnTimerCompleteAction, dispatch),
-    guestClicksOkOnTimerCompleteAction: bindActionCreators(guestClicksOkOnTimerCompleteAction, dispatch),
+    onClickTimerDoneAction: bindActionCreators(onClickTimerDoneAction, dispatch),
     updateHourByUserAction: bindActionCreators(updateHourByUserAction, dispatch),
     updateMinuteByUserAction: bindActionCreators(updateMinuteByUserAction, dispatch),
+    editTimerAction: bindActionCreators(editTimerAction, dispatch),    
+    saveEditTimerAction: bindActionCreators(saveEditTimerAction, dispatch),
+    cancelEditTimerAction: bindActionCreators(cancelEditTimerAction, dispatch)
   }
 }
 

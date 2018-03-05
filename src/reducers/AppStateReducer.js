@@ -6,8 +6,8 @@ const INITIAL_STATE = {
   isTimerRunning: false,
   isTimerComplete: false,
   defaultTime: {
-    hours: '00',
-    minutes: '03'
+    hours: '04',
+    minutes: '30'
   }
 }
 
@@ -15,6 +15,8 @@ export const AppStateReducer = (state=INITIAL_STATE, action) => {
   const {
     EDIT_MODE_ON, 
     EDIT_MODE_OFF, /* ADD_NEW_TIMER_TO_LIST */
+    EDIT_EXISTING_TIMER_ON,
+    EDIT_EXISTING_TIMER_OFF,
     START_TIMER_COUNTDOWN,
     STOP_TIMER_COUNTDOWN,
     TIMER_COMPLETE,
@@ -30,6 +32,10 @@ export const AppStateReducer = (state=INITIAL_STATE, action) => {
       return Object.assign({}, state, { isEditing: true })
     case EDIT_MODE_OFF:
       return Object.assign({}, state, { isEditing: false })
+    case EDIT_EXISTING_TIMER_ON:
+      return Object.assign({}, state, { isEditingExistingTimer: true })
+    case EDIT_EXISTING_TIMER_OFF:
+      return Object.assign({}, state, { isEditingExistingTimer: false })
     case START_TIMER_COUNTDOWN:
       const { endTime } = action.payload
       return { ...state, currentTimer: {
@@ -53,7 +59,7 @@ export const AppStateReducer = (state=INITIAL_STATE, action) => {
     case SET_MINUTES_USER:
       return { ...state, defaultTime: { ...state.defaultTime, minutes: action.payload } }
     case SET_HOUR_USER:
-      return { ...state, defaultTime: { ...state.defaultTime, hour: action.payload } }
+      return { ...state, defaultTime: { ...state.defaultTime, hours: action.payload } }
     default:
       return state
   }

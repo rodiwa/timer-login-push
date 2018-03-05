@@ -4,20 +4,20 @@ import { min } from 'moment';
 
 export default class TimePickerIos extends React.Component {
   state = {
-    hour: '04',
+    hours: '04',
     minutes: '30'
   }
 
   componentWillMount () {
-    const { hour, minutes } = this.props.defaults
+    const { hours, minutes } = this.props.defaults
     this.setState({
-      hour, minutes
+      hours, minutes
     })
   }
 
-  updateHour = hour => {
-    this.setState({ hour })
-    this.props.updateHourByUser(hour)
+  updateHour = hours => {
+    this.setState({ hours })
+    this.props.updateHourByUser(hours)
   }
 
   updateMinutes = minutes => {
@@ -29,8 +29,8 @@ export default class TimePickerIos extends React.Component {
     return (
       <View style={styles.pickerContainer}>
         <Picker style={styles.picker}
-          selectedValue={this.state.hour}
-          onValueChange={(hour, itemIndex) => this.updateHour(hour)}>
+          selectedValue={this.state.hours}
+          onValueChange={(hours, itemIndex) => this.updateHour(hours)}>
             <Picker.Item label="00" value="00" />
             <Picker.Item label="01" value="01" />
             <Picker.Item label="02" value="02" />
@@ -51,8 +51,8 @@ export default class TimePickerIos extends React.Component {
         <Picker style={styles.picker}
           selectedValue={this.state.minutes}
           onValueChange={(minutes, itemIndex) => this.updateMinutes(minutes)}>
-            <Picker.Item label="00" value="00" />
-            <Picker.Item label="03" value="03" />
+            <Picker.Item label="02-t" value="02" />
+            <Picker.Item label="03-t" value="03" />
             <Picker.Item label="10" value="10" />
             <Picker.Item label="20" value="20" />
             <Picker.Item label="30" value="30" />
