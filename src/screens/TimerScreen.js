@@ -1,8 +1,6 @@
 import React from 'react'
 import moment from 'moment'
-import {
-  View, Text, StyleSheet, Button, TextInput, Platform
-} from 'react-native'
+import { View, StyleSheet, TextInput, Platform } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { commonStyles } from '../common/styles'
@@ -20,6 +18,8 @@ import {
   editTimerAction,
   saveEditTimerAction,
   cancelEditTimerAction } from '../actions/AppActions'
+import { Container, Content, Button, Body, Text } from 'native-base'
+import { Col, Row, Grid } from "react-native-easy-grid"
 
 class TimerScreen extends React.Component {
   state = {}
@@ -51,7 +51,7 @@ class TimerScreen extends React.Component {
     }
 
     if (currentTimer) {
-      return <Text> {currentTimer.title} </Text>
+      return <Text style={ commonStyles.timerTitleStyle }> {currentTimer.title} </Text>
     }
   }
 
@@ -63,7 +63,7 @@ class TimerScreen extends React.Component {
 
     if (isTimerComplete) {
       return (
-        <Text>{'Your time(r) is up! ;)'}</Text>
+        <Text style={commonStyles.timerUpMessageStyle}>{'Your time(r) is up! ;)'}</Text>
       )
     }
 
@@ -83,7 +83,7 @@ class TimerScreen extends React.Component {
     }
     
     return (
-      <Text> {`${hours}:${minutes}`} </Text>
+      <Text style={commonStyles.clockText}> {`${hours}:${minutes}`} </Text>
     )
   }
 
@@ -102,9 +102,13 @@ class TimerScreen extends React.Component {
 
     if (isTimerComplete) {
       return (
-        <Button
-          title={'Done'}
-          onPress={() => onClickTimerDoneAction() } />
+        <View>
+          <Button
+            title={'Done'}
+            onPress={() => onClickTimerDoneAction() }>
+            <Text>Done</Text>
+          </Button>
+        </View>
       )
     }
 
@@ -113,17 +117,22 @@ class TimerScreen extends React.Component {
       const btnLabel = isEditingExistingTimer ? 'Done' : 'Cancel'
       return (
         <View>
-          { !isEditingExistingTimer && <Button title='Add' onPress={()=>this.props.saveNewTimerAction(this.state.newTimerTitle)} /> }
-          <Button title={btnLabel} onPress={()=>this.onClickCancelBtn()} />
+          { !isEditingExistingTimer && <Button title='Add' onPress={()=>this.props.saveNewTimerAction(this.state.newTimerTitle)}><Text>{'Add Timer'}</Text></Button> }
+          { !isUserLoggedIn && <Button title={btnLabel} onPress={()=>this.onClickCancelBtn()}>
+            <Text>{btnLabel}</Text>
+          </Button> }
         </View>
       )
     }
 
     return (
-      <Button
-        title={ isTimerRunning ? 'Stop' : 'Start' }
-        onPress={()=>this.toggleTimer()}
-      />
+      <View>
+        <Button
+          onPress={()=>this.toggleTimer()}
+          >
+          <Text>{ isTimerRunning ? 'Stop' : 'Start' }</Text>
+        </Button>
+      </View>
     )
   }
 
@@ -132,20 +141,56 @@ class TimerScreen extends React.Component {
     const { isUserLoggedIn } = this.props
     return ( !isEditing && !isUserLoggedIn && !isTimerRunning && !isTimerComplete &&
       <View>
-        <Button title="Edit" onPress={()=>this.props.editTimerAction(isUserLoggedIn)} />
+        <Button title="Edit" onPress={()=>this.props.editTimerAction(isUserLoggedIn)}>
+          <Text>Edit</Text>
+        </Button>
         { isUserLoggedIn && <Button title="Delete" onPress={()=>null} /> }
       </View>
     )
   }
 
+  showAddTimerCancelButton () {
+    const { isEditing } = this.props.app
+    const { isUserLoggedIn } = this.props
+    
+    if (isEditing && isUserLoggedIn) {
+      const { isEditingExistingTimer } = this.props.app
+
+      return (
+        <View>
+          <Button onPress={()=>this.onClickCancelBtn()}>
+            <Text>{'Cancel'}</Text>
+          </Button>
+        </View>
+      )
+    }
+
+    return null
+  }
+
   render() {
     return (
-      <View style={commonStyles.view}>
-        { this.showTimerTitle() }
-        { this.showTimerHHMM() }
-        { this.showStartStopButtons() }
-        { this.showEditDeleteButtons() }        
-      </View>
+      <Container>
+        <Content contentContainerStyle={{flex: 1, justifyContent: 'center', backgroundColor: 'white'}}>
+          <Grid>
+            <Row size={4} style={{ /*backgroundColor: 'pink',*/ justifyContent: 'center', alignItems: 'flex-end'}}>
+              <View>
+                { this.showTimerTitle() }
+                { this.showTimerHHMM() }
+              </View>
+            </Row>
+            <Row style={{ /*backgroundColor: 'cyan',*/ justifyContent: 'center', alignItems: 'center'}}>
+              { this.showStartStopButtons() }
+            </Row>
+            <Row style={{ /*backgroundColor: 'lightgreen',*/ justifyContent: 'center', alignItems: 'flex-start'}}>
+              { this.showEditDeleteButtons() }
+              { this.showAddTimerCancelButton() }
+            </Row>
+            <Row>
+            </Row>
+          </Grid>
+        </Content>
+      </Container>
     )
   }
 }

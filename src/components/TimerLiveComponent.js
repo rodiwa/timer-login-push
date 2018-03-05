@@ -7,6 +7,7 @@ import { padStart } from 'lodash'
 import preciseDiff from 'moment-precise-range-plugin'
 import { timerCompleteAction } from '../actions/AppActions'
 import { Notifications } from 'expo'
+import { commonStyles } from '../common/styles'
 
 const PUSH_CONFIG_OPTS = {
   title: 'Countdown Timer Thingie',
@@ -111,8 +112,8 @@ class TimerLiveComponent extends React.Component {
 
   render () {
     return (
-      <View>
-        <Text>{ this.showTime() }</Text>
+      <View style={{ justifyContent: 'center' }}>
+        <Text style={commonStyles.clockText}>{ this.showTime() }</Text>
       </View>
     )
   }
