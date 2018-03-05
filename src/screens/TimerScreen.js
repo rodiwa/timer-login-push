@@ -44,7 +44,7 @@ class TimerScreen extends React.Component {
         <TextInput
           style={styles.textInput}
           placeholder="Add name of timer"
-          onChangeText={(newTimerTitle) => this.setState({newTimerTitle})}
+          onChangeText={newTimerTitle => this.setState({ newTimerTitle })}
           value={this.state.text}
         />
       )

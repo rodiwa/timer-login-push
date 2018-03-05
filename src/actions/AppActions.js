@@ -91,10 +91,9 @@ export const startTimerAction = (hours, minutes) => {
 export const stopTimerAction = () => {
   const { RESET_TIMER } = APP_ACTIONS
   return (dispatch, getState) => {
-    const { isLoggedIn } = getState().login
-    const navToUserType = isLoggedIn ? 'User' : 'Guest'
+    const navAfterStopTimer = getState().login.isLoggedIn ? 'User' : 'Guest'
     dispatch(NavigationActions.navigate({
-      routeName: navToUserType,
+      routeName: navAfterStopTimer,
       action: NavigationActions.navigate({ routeName: 'Timer' })
     }))
     dispatch({ type: RESET_TIMER })
@@ -110,7 +109,7 @@ export const onClickTimerDoneAction = () => {
       routeName: isLoggedIn ? 'User' : 'Guest',
       action: NavigationActions.navigate({ routeName: 'Timer' })
     }))
-    dispatch({ type: RESET_TIMER })    
+    dispatch({ type: RESET_TIMER })
   }
 }
 

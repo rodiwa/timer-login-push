@@ -47,7 +47,10 @@ export const AppStateReducer = (state=INITIAL_STATE, action) => {
     case TIMER_COMPLETE:
       return { ...state, isTimerRunning: false, isTimerComplete: true }
     case RESET_TIMER:
-      return { ...state, isTimerRunning: false, isEditing: false, isTimerComplete: false }
+      return { ...state, currentTimer: { 
+          ...state.currentTimer,
+          endTime: null
+        }, isTimerRunning: false, isEditing: false, isTimerComplete: false }
     case SET_SELECTED_TIMER_DETAILS:
       const { title, hours, minutes } = action.payload
       return { ...state, currentTimer: { title, hours, minutes } }
