@@ -20,15 +20,12 @@ import {
   updateMinuteByUserAction } from '../actions/AppActions'
 
 class TimerScreen extends React.Component {
-  state = {
-    hours: '04',
-    minutes: '20',
-  }
+  state = {}
 
   toggleTimer = () => {
-    const { startTimerAction, stopTimerAction } = this.props
-    const { isTimerRunning, currentTimer } = this.props.app
-    const { hours, minutes } = currentTimer
+    const { startTimerAction, stopTimerAction, isUserLoggedIn } = this.props
+    const { isTimerRunning, currentTimer, defaultTime } = this.props.app
+    const { hours, minutes } = isUserLoggedIn ? currentTimer : defaultTime
     isTimerRunning? stopTimerAction() : startTimerAction(hours, minutes)
   }
 
@@ -40,7 +37,7 @@ class TimerScreen extends React.Component {
         <TextInput
           style={styles.textInput}
           placeholder="Add name of timer"
-          onChangeText={(newTimerTitle) => this.setState({newTimerTitle})}
+          onChangeText={newTimerTitle => this.setState({ newTimerTitle })}
           value={this.state.text}
         />
       )
@@ -52,9 +49,10 @@ class TimerScreen extends React.Component {
   }
 
   showTimerHHMM = () => {
-    const { isEditing, currentTimer, isTimerRunning, isTimerComplete } = this.props.app    
+    const { isEditing, currentTimer, isTimerRunning, isTimerComplete, defaultTime } = this.props.app
+    const { isUserLoggedIn } = this.props
 
-    let { hours, minutes } = currentTimer ? currentTimer : this.state
+    let { hours, minutes } = isUserLoggedIn ? currentTimer : defaultTime
 
     if (isTimerComplete) {
       return (
