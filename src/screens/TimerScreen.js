@@ -173,7 +173,7 @@ class TimerScreen extends React.Component {
       <Container>
         <Content contentContainerStyle={{flex: 1, justifyContent: 'center', backgroundColor: 'white'}}>
           <Grid>
-            <Row size={4} style={{ /*backgroundColor: 'pink',*/ justifyContent: 'center', alignItems: 'flex-end'}}>
+            <Row size={4} style={{ /*backgroundColor: 'pink',*/ justifyContent: 'center', alignItems: 'center'}}>
               <View>
                 { this.showTimerTitle() }
                 { this.showTimerHHMM() }
