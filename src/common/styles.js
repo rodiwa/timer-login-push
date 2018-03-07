@@ -25,3 +25,11 @@ export const commonStyles = StyleSheet.create({
     color: 'green'
   }
 })
+
+export const tabBarOptions = {
+  showLabel: false,
+  style: {
+    backgroundColor: 'white',
+    height: 80,
+  }
+}
