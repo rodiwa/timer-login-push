@@ -16,7 +16,7 @@ class ListScreen extends React.Component {
     const arrTimer = []
 
     if (!userData) {
-      return (<Text>You have not saved any timers yet!</Text>)
+      return (<Text style={{ fontSize: 25 }}>You have not saved any timers yet!</Text>)
     }
 
     const { timers } = userData
