@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {
-  View, Text, Button
-} from 'react-native'
+import { View } from 'react-native'
+import { Container, Content, Button, Text } from 'native-base'
+import { Grid, Col, Row } from 'react-native-easy-grid'
 
 import { commonStyles } from '../common/styles'
 import { GOOGLE } from '../constants/Strings'
@@ -13,16 +13,26 @@ class LoginScreen extends React.Component {
   signInButton = (type='Email') => {
     const {navigate} = this.props.navigation
     return (
-      <Button title={type} onPress={() => this.props.loginAction(navigate)}/>
+      <Button large title={type} onPress={() => this.props.loginAction(navigate)}>
+        <Text> {type} </Text>
+      </Button>
     )
   }
 
   render() {
     return (
-      <View style={commonStyles.view}>
-        <Text>Sign In</Text>
-        { this.signInButton(GOOGLE) }
-      </View>
+      <Container>
+        <Content contentContainerStyle={{flex: 1, justifyContent: 'center', backgroundColor: 'white' }}>
+          <Grid>
+            <Row style={{ /*backgroundColor: 'cyan',*/ justifyContent: 'center', alignItems: 'center'}}>
+              <View style={{ justifyContent: 'center', alignContent: 'center', alignItems: 'center' }}>
+                <Text style={{ fontSize: 25, marginBottom: 20 }}>Sign In</Text>
+                { this.signInButton(GOOGLE) }
+              </View>
+            </Row>
+          </Grid>
+        </Content>
+      </Container>
     )
   }
 }

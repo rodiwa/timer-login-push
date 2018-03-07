@@ -15,7 +15,7 @@ export const LoadingScreen = ({ customMsg }) => {
   const message = customMsg || LOADING_MSG
   return (
     <View style={styles.view}>
-      <Text>{ message }</Text>
+      <Text style={{ fontSize: 25 }}>{ message }</Text>
     </View>
   )
 }

@@ -32,7 +32,7 @@ class ListScreen extends React.Component {
             key={idx}
             title={timerDetails.title}
             onPress={()=>selectTimerFromListAction(timerDetails)}>
-            <Left><Text style={{ fontSize: 30 }}>{timerDetails.title}</Text></Left>
+            <Left><Text style={{ fontSize: 25 }}>{timerDetails.title}</Text></Left>
             <Right><Text style={{ fontSize: 20 }}>{`${timerDetails.hours}:${timerDetails.minutes}`}</Text></Right>
           </ListItem>
          )
@@ -42,7 +42,7 @@ class ListScreen extends React.Component {
   }
 
   renderAddNewTimerBtn () {
-    return <Button title={TIMER_MSGS.ADD_NEW} onPress={()=>this.props.addNewTimerAction()}><Text>{ TIMER_MSGS.ADD_NEW }</Text></Button>
+    return <Button large title={TIMER_MSGS.ADD_NEW} onPress={()=>this.props.addNewTimerAction()}><Text>{ TIMER_MSGS.ADD_NEW }</Text></Button>
   }
 
   render () {
