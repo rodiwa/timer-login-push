@@ -27,7 +27,7 @@ class TimerScreen extends React.Component {
   toggleTimer = () => {
     const { startTimerAction, stopTimerAction, isUserLoggedIn } = this.props
     const { isTimerRunning, currentTimer, defaultTime } = this.props.app
-    const { hours, minutes } = isUserLoggedIn ? currentTimer : defaultTime
+    const { hours, minutes } = isUserLoggedIn && currentTimer && currentTimer.hours ? currentTimer : defaultTime
     isTimerRunning? stopTimerAction() : startTimerAction(hours, minutes)
   }
 
@@ -59,7 +59,7 @@ class TimerScreen extends React.Component {
     const { isEditing, currentTimer, defaultTime, isTimerRunning, isTimerComplete } = this.props.app
     const { isUserLoggedIn } = this.props
 
-    let { hours, minutes } = isUserLoggedIn ? currentTimer : defaultTime
+    let { hours, minutes } = isUserLoggedIn && currentTimer && currentTimer.hours ? currentTimer : defaultTime
 
     if (isTimerComplete) {
       return (

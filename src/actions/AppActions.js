@@ -66,7 +66,7 @@ export const selectTimerFromListAction = timerDetails => {
 export const showFirstTimerInListOnLogin = timerDetails => {
   const { SET_SELECTED_TIMER_DETAILS } = APP_ACTIONS
   return dispatch => {
-    dispatch({ type: SET_SELECTED_TIMER_DETAILS, payload: timerDetails })
+    timerDetails && dispatch({ type: SET_SELECTED_TIMER_DETAILS, payload: timerDetails })
     dispatch(NavigationActions.navigate({
       routeName: 'User',
       action: NavigationActions.navigate({ routeName: 'Timer', params: timerDetails })
