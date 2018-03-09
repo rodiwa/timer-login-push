@@ -42,7 +42,7 @@ class ListScreen extends React.Component {
   }
 
   renderAddNewTimerBtn () {
-    return <Button large title={TIMER_MSGS.ADD_NEW} onPress={()=>this.props.addNewTimerAction()}><Text>{ TIMER_MSGS.ADD_NEW }</Text></Button>
+    return <Button title={TIMER_MSGS.ADD_NEW} onPress={()=>this.props.addNewTimerAction()}><Text>{ TIMER_MSGS.ADD_NEW }</Text></Button>
   }
 
   render () {

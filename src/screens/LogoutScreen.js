@@ -25,7 +25,6 @@ class LogoutScreen extends React.Component {
             <Row style={{ /*backgroundColor: 'cyan',*/ justifyContent: 'center', alignItems: 'center'}}>
               <View style={{ justifyContent: 'center', alignContent: 'center', alignItems: 'center' }}>
                 <Button
-                  large
                   title='Yep, log me out'
                   onPress={()=>{this.props.logoutAction()}}
                 ><Text>{'Yep, log out!'}</Text></Button>
@@ -34,7 +33,6 @@ class LogoutScreen extends React.Component {
             <Row style={{ /*backgroundColor: 'cyan',*/ justifyContent: 'center', alignItems: 'flex-start'}}>
               <View style={{ justifyContent: 'center', alignContent: 'center', alignItems: 'center' }}>
                 <Button
-                  large
                   title='Nope, my bad'
                   onPress={()=>{this.props.navigation.goBack()}}
                 ><Text>{'Nope, my bad'}</Text></Button>

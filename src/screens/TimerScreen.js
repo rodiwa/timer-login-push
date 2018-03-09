@@ -104,7 +104,6 @@ class TimerScreen extends React.Component {
       return (
         <View>
           <Button
-            large
             title={'Done'}
             onPress={() => onClickTimerDoneAction() }>
             <Text>Done</Text>
@@ -118,8 +117,8 @@ class TimerScreen extends React.Component {
       const btnLabel = isEditingExistingTimer ? 'Done' : 'Cancel'
       return (
         <View>
-          { !isEditingExistingTimer && <Button large title='Add' onPress={()=>this.props.saveNewTimerAction(this.state.newTimerTitle)}><Text>{'Add Timer'}</Text></Button> }
-          { !isUserLoggedIn && <Button large title={btnLabel} onPress={()=>this.onClickCancelBtn()}>
+          { !isEditingExistingTimer && <Button title='Add' onPress={()=>this.props.saveNewTimerAction(this.state.newTimerTitle)}><Text>{'Add Timer'}</Text></Button> }
+          { !isUserLoggedIn && <Button title={btnLabel} onPress={()=>this.onClickCancelBtn()}>
             <Text>{btnLabel}</Text>
           </Button> }
         </View>
@@ -129,7 +128,6 @@ class TimerScreen extends React.Component {
     return (
       <View>
         <Button
-          large
           onPress={()=>this.toggleTimer()}
           >
           <Text>{ isTimerRunning ? 'Stop' : 'Start' }</Text>
@@ -143,10 +141,10 @@ class TimerScreen extends React.Component {
     const { isUserLoggedIn } = this.props
     return ( !isEditing && !isUserLoggedIn && !isTimerRunning && !isTimerComplete &&
       <View>
-        <Button large title="Edit" onPress={()=>this.props.editTimerAction(isUserLoggedIn)}>
+        <Button title="Edit" onPress={()=>this.props.editTimerAction(isUserLoggedIn)}>
           <Text>Edit</Text>
         </Button>
-        { isUserLoggedIn && <Button large title="Delete" onPress={()=>null} /> }
+        { isUserLoggedIn && <Button title="Delete" onPress={()=>null} /> }
       </View>
     )
   }
@@ -160,7 +158,7 @@ class TimerScreen extends React.Component {
 
       return (
         <View>
-          <Button large onPress={()=>this.onClickCancelBtn()}>
+          <Button onPress={()=>this.onClickCancelBtn()}>
             <Text>{'Cancel'}</Text>
           </Button>
         </View>

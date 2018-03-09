@@ -13,7 +13,7 @@ class LoginScreen extends React.Component {
   signInButton = (type='Email') => {
     const {navigate} = this.props.navigation
     return (
-      <Button large title={type} onPress={() => this.props.loginAction(navigate)}>
+      <Button title={type} onPress={() => this.props.loginAction(navigate)}>
         <Text> {type} </Text>
       </Button>
     )
