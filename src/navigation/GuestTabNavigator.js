@@ -33,7 +33,7 @@ export default TabNavigator(
                 : 'md-alarm';
             break;
           case 'Login':
-            iconName = Platform.OS === 'ios' ? `ios-log-in${focused ? '' : '-outline'}` : 'md-contact';
+            iconName = Platform.OS === 'ios' ? `ios-contact${focused ? '' : '-outline'}` : 'md-contact';
             break;
         }
         return (

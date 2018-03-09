@@ -33,7 +33,7 @@ export default TabNavigator(
         let iconName;
         switch (routeName) {
           case 'List':
-            iconName = Platform.OS === 'ios' ? `ios-list${focused ? '-box' : ''}` : 'md-list';
+            iconName = Platform.OS === 'ios' ? `ios-list${focused ? '-box-outline' : ''}` : 'md-list';
             break;
           case 'Timer':
             iconName =
@@ -42,7 +42,7 @@ export default TabNavigator(
                 : 'md-alarm';
             break;
           case 'Logout':
-            iconName = Platform.OS === 'ios' ? `ios-settings${focused ? '' : '-outline'}` : 'md-contact';
+            iconName = Platform.OS === 'ios' ? `ios-contact${focused ? '' : '-outline'}` : 'md-contact';
             break;
         }
         return (
