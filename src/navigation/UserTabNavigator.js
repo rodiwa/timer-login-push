@@ -39,10 +39,10 @@ export default TabNavigator(
             iconName =
               Platform.OS === 'ios'
                 ? `ios-timer${focused ? '' : '-outline'}`
-                : 'md-information-circle';
+                : 'md-alarm';
             break;
           case 'Logout':
-            iconName = Platform.OS === 'ios' ? `ios-settings${focused ? '' : '-outline'}` : 'md-link';
+            iconName = Platform.OS === 'ios' ? `ios-settings${focused ? '' : '-outline'}` : 'md-contact';
             break;
         }
         return (
