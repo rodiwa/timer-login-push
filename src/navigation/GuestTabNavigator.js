@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { TabNavigator, TabBarBottom } from 'react-navigation';
 
 import Colors from '../constants/Colors';
+import { tabBarOptions } from '../common/styles'
 
 import TimerScreen from '../screens/TimerScreen'
 import LoginScreen from '../screens/LoginScreen'
@@ -29,22 +30,23 @@ export default TabNavigator(
             iconName =
               Platform.OS === 'ios'
                 ? `ios-timer${focused ? '' : '-outline'}`
-                : 'md-information-circle';
+                : 'md-alarm';
             break;
           case 'Login':
-            iconName = Platform.OS === 'ios' ? `ios-log-in${focused ? '' : '-outline'}` : 'md-link';
+            iconName = Platform.OS === 'ios' ? `ios-contact${focused ? '' : '-outline'}` : 'md-contact';
             break;
         }
         return (
           <Ionicons
             name={iconName}
-            size={28}
+            size={42}
             style={{ marginBottom: -3 }}
-            color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
+            color={focused ? 'red' : 'grey'}
           />
         );
       },
     }),
+    tabBarOptions,
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
     animationEnabled: false,

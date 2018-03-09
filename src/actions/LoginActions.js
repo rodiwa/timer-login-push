@@ -40,9 +40,8 @@ export const loginGoogleAction = navigate => {
 
         if (userData) {
           // if timer is added previosuly, set the first timer as current, only THEN open timer screen
-          const timerKeys = Object.keys(userData.timers)
-          const firstTimer = userData.timers[timerKeys[0]]
-
+          const timerKeys = userData.timers && Object.keys(userData.timers)
+          const firstTimer = timerKeys ? userData.timers[timerKeys[0]] : null
           dispatch(showFirstTimerInListOnLogin(firstTimer))
         } else {
           // if no timer added yet, nav to list screen after login
@@ -50,12 +49,14 @@ export const loginGoogleAction = navigate => {
         }
       } else if (result.type === 'cancelled') {
         dispatch({ type: LOGIN_CANCEL })
-        dispatch(gotoGuestandingPageAction())
+        dispatch(gotoGuestLandingPageAction())
+        // TODO: show toaster for CANCEL
       }
     } catch (e) {
       console.log(e)
       dispatch({ type: LOGIN_CANCEL })
-      dispatch(gotoGuestandingPageAction())
+      dispatch(gotoGuestLandingPageAction())
+        // TODO: show toaster for ERROR      
     }
   }
 }
