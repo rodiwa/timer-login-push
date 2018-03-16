@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, Picker, StyleSheet } from 'react-native'
 import { min } from 'moment';
 
-export default class TimePickerIos extends React.Component {
+export default class TimePickerForIos extends React.Component {
   state = {
     hours: '04',
     minutes: '30'
