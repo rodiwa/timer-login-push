@@ -5,8 +5,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { commonStyles } from '../common/styles'
 import TimerLiveComponent from '../components/TimerLiveComponent'
-import TimePickerIos from '../components/TimePickerIos'
-import TimePickerAndroid from '../components/TimePickerAndroid'
+import TimePickerForIos from '../components/TimePickerForIos'
+import TimePickerForAndroid from '../components/TimePickerForAndroid'
 import {
   cancelAddTimerAction,
   saveNewTimerAction,
@@ -77,8 +77,8 @@ class TimerScreen extends React.Component {
       const { defaultTime } = this.props
       return (
         Platform.OS === 'ios' ?
-          <TimePickerIos defaults={defaultTime} updateHourByUser={this.props.updateHourByUserAction} updateMinuteByUser={this.props.updateMinuteByUserAction} /> :
-          <TimePickerIos defaults={defaultTime} updateHourByUser={this.props.updateHourByUserAction} updateMinuteByUser={this.props.updateMinuteByUserAction} />
+          <TimePickerForIos defaults={defaultTime} updateHourByUser={this.props.updateHourByUserAction} updateMinuteByUser={this.props.updateMinuteByUserAction} /> :
+          <TimePickerForAndroid defaults={defaultTime} updateHourByUser={this.props.updateHourByUserAction} updateMinuteByUser={this.props.updateMinuteByUserAction} />
       )
     }
     
