@@ -110,10 +110,20 @@ class TimerLiveComponent extends React.Component {
     return `${hours}:${minutes}`
   }
 
+  showTimerEndTime () {
+    const { endTime } = this.props.currentTimer
+    if (endTime) {
+      return `Timer ends at ${moment(endTime).format('HH:mm A')}`
+    }
+
+    return null
+  }
+
   render () {
     return (
-      <View style={{ justifyContent: 'center' }}>
+      <View style={{ justifyContent: 'center', alignItems: 'center'}}>
         <Text style={commonStyles.clockTextRunning}>{ this.showTime() }</Text>
+        <Text> { this.showTimerEndTime() } </Text>
       </View>
     )
   }

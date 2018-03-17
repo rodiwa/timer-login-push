@@ -130,6 +130,8 @@ class TimerScreen extends React.Component {
     return (
       <View>
         <Button
+          danger={isTimerRunning}
+          success={!isTimerRunning}
           onPress={()=>this.toggleTimer()}
           >
           <Text>{ isTimerRunning ? STOP_TIMER : START_TIMER }</Text>
