@@ -8,10 +8,11 @@ import preciseDiff from 'moment-precise-range-plugin'
 import { timerCompleteAction } from '../actions/AppActions'
 import { Notifications } from 'expo'
 import { commonStyles } from '../common/styles'
+import { USER_MSGS } from '../constants/Strings'
 
 const PUSH_CONFIG_OPTS = {
-  title: 'Countdown Timer Thingie',
-  body: 'Your time(r) is up!',
+  title: USER_MSGS.DEFAULT_TIMER_TITLE,
+  body: USER_MSGS.TIMER_COMPLETE,
   ios: {
     sound: true
   },
@@ -68,9 +69,13 @@ class TimerLiveComponent extends React.Component {
 
   startTicker () {
     const interval = 1000 * 60 * 0.5
+    const { title } = this.props.currentTimer
 
     const endTime = moment(this.props.currentTimer.endTime)
     this.checkIfTimerIsComplete(endTime)
+
+    // if timer has title, set it to show up in notification
+    PUSH_CONFIG_OPTS = { ...PUSH_CONFIG_OPTS, title: title ? title : USER_MSGS.DEFAULT_TIMER_TITLE }
 
     // schedule new PUSH notif with updated endTime <---- 2
     Notifications.scheduleLocalNotificationAsync(PUSH_CONFIG_OPTS, {
@@ -81,7 +86,6 @@ class TimerLiveComponent extends React.Component {
 
     let nowTime
 
-    const { title } = this.props.currentTimer
     let { hours, minutes } = moment().preciseDiff(endTime, true)
     hours = padStart(hours, 2, '0')
     minutes = padStart(minutes, 2, '0')
