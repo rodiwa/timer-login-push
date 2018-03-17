@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { View } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import { commonStyles } from '../common/styles'
 import { NavigationActions } from 'react-navigation'
 
@@ -51,9 +51,9 @@ class ListScreen extends React.Component {
         <Content contentContainerStyle={{flex: 1, justifyContent: 'center', backgroundColor: 'white' }}>
           <Grid>
             <Row size={80} style={{ /*backgroundColor: 'cyan',*/ justifyContent: 'center', alignItems: 'flex-start', alignContent: 'stretch' }}>
-              <View style={{ padding: 25, flexDirection: 'row' }}>
+              <ScrollView style={{ padding: 25, flexDirection: 'row' }}>
                 { this.renderTimerList() }
-              </View>
+              </ScrollView>
             </Row>
             <Row size={20} style={{ /*backgroundColor: 'pink',*/ justifyContent: 'center', alignItems: 'center' }}>
               <View>
