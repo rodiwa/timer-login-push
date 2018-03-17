@@ -5,6 +5,7 @@ import { Container, Content, Button, Text, Thumbnail } from 'native-base'
 import { Grid, Col, Row } from 'react-native-easy-grid'
 import { commonStyles } from '../common/styles'
 import { logoutAction } from '../actions/LoginActions'
+import { USER_MSGS } from '../constants/Strings'
 
 class LogoutScreen extends React.Component {
   render () {
@@ -19,23 +20,21 @@ class LogoutScreen extends React.Component {
             </Row>
             <Row style={{ /*backgroundColor: 'cyan',*/ justifyContent: 'center', alignItems: 'flex-end'}}>
               <View style={{ justifyContent: 'center', alignContent: 'center', alignItems: 'center' }}>
-                <Text style={{ fontSize: 25, textAlign: 'center' }}>Sure you logging out?</Text>
+                <Text style={{ fontSize: 25, textAlign: 'center' }}>{ USER_MSGS.CONFIRM_LOGOUT }</Text>
               </View>
             </Row>
             <Row style={{ /*backgroundColor: 'cyan',*/ justifyContent: 'center', alignItems: 'center'}}>
               <View style={{ justifyContent: 'center', alignContent: 'center', alignItems: 'center' }}>
                 <Button
-                  title='Yep, log me out'
                   onPress={()=>{this.props.logoutAction()}}
-                ><Text>{'Yep, log out!'}</Text></Button>
+                ><Text>{ USER_MSGS.YES_LOGOUT }</Text></Button>
               </View>
             </Row>
             <Row style={{ /*backgroundColor: 'cyan',*/ justifyContent: 'center', alignItems: 'flex-start'}}>
               <View style={{ justifyContent: 'center', alignContent: 'center', alignItems: 'center' }}>
                 <Button
-                  title='Nope, my bad'
                   onPress={()=>{this.props.navigation.goBack()}}
-                ><Text>{'Nope, my bad'}</Text></Button>
+                ><Text>{ USER_MSGS.NO_LOGOUT }</Text></Button>
               </View>
             </Row>
           </Grid>

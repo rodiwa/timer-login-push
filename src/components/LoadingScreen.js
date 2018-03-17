@@ -4,15 +4,15 @@
 
 import React from 'react'
 import {
-View,
-Text,
-StyleSheet
+  View,
+  Text,
+  StyleSheet
 } from 'react-native'
 import MonoText from './StyledText'
-import { LOADING_MSG } from '../constants/Strings'
+import { USER_MSGS } from '../constants/Strings'
  
 export const LoadingScreen = ({ customMsg }) => {
-  const message = customMsg || LOADING_MSG
+  const message = customMsg || USER_MSGS.LOADING
   return (
     <View style={styles.view}>
       <Text style={{ fontSize: 25 }}>{ message }</Text>

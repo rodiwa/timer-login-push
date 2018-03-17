@@ -8,6 +8,7 @@ import { Grid, Col, Row } from 'react-native-easy-grid'
 import { commonStyles } from '../common/styles'
 import { GOOGLE } from '../constants/Strings'
 import { loginGoogleAction } from '../actions/LoginActions'
+import { USER_MSGS } from '../constants/Strings'
 
 class LoginScreen extends React.Component {
   signInButton = (type='Email') => {
@@ -26,7 +27,7 @@ class LoginScreen extends React.Component {
           <Grid>
             <Row style={{ /*backgroundColor: 'cyan',*/ justifyContent: 'center', alignItems: 'center'}}>
               <View style={{ justifyContent: 'center', alignContent: 'center', alignItems: 'center' }}>
-                <Text style={{ fontSize: 25, marginBottom: 20 }}>Sign In</Text>
+                <Text style={{ fontSize: 25, marginBottom: 20 }}>{ USER_MSGS.SIGN_IN }</Text>
                 { this.signInButton(GOOGLE) }
               </View>
             </Row>

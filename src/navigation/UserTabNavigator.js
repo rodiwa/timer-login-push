@@ -48,7 +48,7 @@ export default TabNavigator(
         return (
           <Ionicons
             name={iconName}
-            size={42}
+            size={36}
             style={{ marginBottom: -3 }}
             color={focused ? 'red' : 'grey'}
           />
