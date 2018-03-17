@@ -5,10 +5,10 @@ import { View } from 'react-native'
 import { commonStyles } from '../common/styles'
 import { NavigationActions } from 'react-navigation'
 
-import { TIMER_MSGS } from '../constants/Strings'
 import { addNewTimerAction, selectTimerFromListAction } from '../actions/AppActions'
 import { Container, Content, Button, Body, List, ListItem, Text, Left, Right } from 'native-base'
 import { Grid, Col, Row } from 'react-native-easy-grid'
+import { USER_MSGS } from '../constants/Strings'
 
 class ListScreen extends React.Component {
   renderTimerList () {
@@ -16,7 +16,7 @@ class ListScreen extends React.Component {
     const arrTimer = []
 
     if (!userData) {
-      return (<Text style={{ fontSize: 25 }}>You have not saved any timers yet!</Text>)
+      return (<Text style={{ fontSize: 25 }}>{ USER_MSGS.NOT_SAVED_TIMERS_YET }</Text>)
     }
 
     const { timers } = userData
@@ -42,7 +42,7 @@ class ListScreen extends React.Component {
   }
 
   renderAddNewTimerBtn () {
-    return <Button title={TIMER_MSGS.ADD_NEW} onPress={()=>this.props.addNewTimerAction()}><Text>{ TIMER_MSGS.ADD_NEW }</Text></Button>
+    return <Button onPress={()=>this.props.addNewTimerAction()}><Text>{ USER_MSGS.ADD_NEW_TIMER }</Text></Button>
   }
 
   render () {

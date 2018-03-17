@@ -20,7 +20,7 @@ export default class App extends React.Component {
 
   componentDidMount () {
     DatabaseService.initialize()
-    persistStore(store).purge()
+    // persistStore(store).purge()
   }
 
   render() {

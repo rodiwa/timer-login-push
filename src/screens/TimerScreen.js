@@ -7,6 +7,7 @@ import { commonStyles } from '../common/styles'
 import TimerLiveComponent from '../components/TimerLiveComponent'
 import TimePickerForIos from '../components/TimePickerForIos'
 import TimePickerForAndroid from '../components/TimePickerForAndroid'
+import { USER_MSGS } from '../constants/Strings'
 import {
   cancelAddTimerAction,
   saveNewTimerAction,
@@ -43,7 +44,7 @@ class TimerScreen extends React.Component {
       return (
         <TextInput
           style={styles.textInput}
-          placeholder="Add name of timer"
+          placeholder={USER_MSGS.ADD_TIMER_TITLE_PLACEHOLDER}
           onChangeText={newTimerTitle => this.setState({ newTimerTitle })}
           value={this.state.text}
         />
@@ -63,7 +64,7 @@ class TimerScreen extends React.Component {
 
     if (isTimerComplete) {
       return (
-        <Text style={commonStyles.timerUpMessageStyle}>{'Your time(r) is up! ;)'}</Text>
+        <Text style={commonStyles.timerUpMessageStyle}>{USER_MSGS.TIMER_COMPLETE}</Text>
       )
     }
 
@@ -97,6 +98,7 @@ class TimerScreen extends React.Component {
   }
 
   showStartStopButtons = () => {
+    const { DONE, CANCEL, ADD_TIMER, START_TIMER, STOP_TIMER, EDIT } = USER_MSGS
     const { isEditing, isTimerRunning, isTimerComplete } = this.props.app
     const { onClickTimerDoneAction, isUserLoggedIn } = this.props
 
@@ -104,7 +106,7 @@ class TimerScreen extends React.Component {
       return (
         <View>
           <Button
-            title={'Done'}
+            title={DONE}
             onPress={() => onClickTimerDoneAction() }>
             <Text>Done</Text>
           </Button>
@@ -114,10 +116,10 @@ class TimerScreen extends React.Component {
 
     if (isEditing) {
       const { isEditingExistingTimer } = this.props.app
-      const btnLabel = isEditingExistingTimer ? 'Done' : 'Cancel'
+      const btnLabel = isEditingExistingTimer ? DONE : CANCEL
       return (
         <View>
-          { !isEditingExistingTimer && <Button title='Add' onPress={()=>this.props.saveNewTimerAction(this.state.newTimerTitle)}><Text>{'Add Timer'}</Text></Button> }
+          { !isEditingExistingTimer && <Button onPress={()=>this.props.saveNewTimerAction(this.state.newTimerTitle)}><Text>{ADD_TIMER}</Text></Button> }
           { !isUserLoggedIn && <Button title={btnLabel} onPress={()=>this.onClickCancelBtn()}>
             <Text>{btnLabel}</Text>
           </Button> }
@@ -130,7 +132,7 @@ class TimerScreen extends React.Component {
         <Button
           onPress={()=>this.toggleTimer()}
           >
-          <Text>{ isTimerRunning ? 'Stop' : 'Start' }</Text>
+          <Text>{ isTimerRunning ? STOP_TIMER : START_TIMER }</Text>
         </Button>
       </View>
     )
@@ -141,10 +143,10 @@ class TimerScreen extends React.Component {
     const { isUserLoggedIn } = this.props
     return ( !isEditing && !isUserLoggedIn && !isTimerRunning && !isTimerComplete &&
       <View>
-        <Button title="Edit" onPress={()=>this.props.editTimerAction(isUserLoggedIn)}>
-          <Text>Edit</Text>
+        <Button onPress={()=>this.props.editTimerAction(isUserLoggedIn)}>
+          <Text>{USER_MSGS.EDIT}</Text>
         </Button>
-        { isUserLoggedIn && <Button title="Delete" onPress={()=>null} /> }
+        { isUserLoggedIn && <Button title={USER_MSGS.DELETE} onPress={()=>null} /> }
       </View>
     )
   }
@@ -159,7 +161,7 @@ class TimerScreen extends React.Component {
       return (
         <View>
           <Button onPress={()=>this.onClickCancelBtn()}>
-            <Text>{'Cancel'}</Text>
+            <Text>{USER_MSGS.CANCEL}</Text>
           </Button>
         </View>
       )
