@@ -38,8 +38,9 @@ export const USER_MSGS = {
   YES_LOGOUT: 'Yep! Log Me Out!',
   NO_LOGOUT: 'Nope! Take Me Back!',
 
-  // timer complete
+  // timer complete and notifs
   TIMER_COMPLETE: 'Your time(r) is up!',
+  DEFAULT_TIMER_TITLE: 'My Timer',
   DONE: 'Done',
   CANCEL: 'Cancel',
   CANNOT_OPEN_TIMEPICKER: 'Cannot open time picker',
