@@ -9,7 +9,12 @@ export const commonStyles = StyleSheet.create({
     alignItems: 'center'
   },
   clockText: {
-    fontSize: 100
+    fontSize: 100,
+  },
+  clockTextRunning: {
+    fontSize: 100,    
+    color: 'green',
+    fontWeight: 'bold'
   },
   timerTitleStyle: {
     fontSize: 30,

@@ -113,7 +113,7 @@ class TimerLiveComponent extends React.Component {
   render () {
     return (
       <View style={{ justifyContent: 'center' }}>
-        <Text style={commonStyles.clockText}>{ this.showTime() }</Text>
+        <Text style={commonStyles.clockTextRunning}>{ this.showTime() }</Text>
       </View>
     )
   }
