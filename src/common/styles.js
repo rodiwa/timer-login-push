@@ -13,8 +13,7 @@ export const commonStyles = StyleSheet.create({
   },
   clockTextRunning: {
     fontSize: 100,    
-    color: 'green',
-    fontWeight: 'bold'
+    color: 'green'
   },
   timerTitleStyle: {
     fontSize: 30,

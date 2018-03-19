@@ -51,7 +51,7 @@ class ListScreen extends React.Component {
         <Content contentContainerStyle={{flex: 1, justifyContent: 'center', backgroundColor: 'white' }}>
           <Grid>
             <Row size={80} style={{ /*backgroundColor: 'cyan',*/ justifyContent: 'center', alignItems: 'flex-start', alignContent: 'stretch' }}>
-              <ScrollView style={{ padding: 25, flexDirection: 'row' }}>
+              <ScrollView contentContainerStyle={{ padding: 25, flexDirection: 'row', alignItems: 'stretch' }}>
                 { this.renderTimerList() }
               </ScrollView>
             </Row>
